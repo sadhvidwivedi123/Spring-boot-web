@@ -1,0 +1,99 @@
+  .form{
+  
+  border:2px solid black;
+  width:30%;
+  margin:auto;
+  padding:10px;
+   background-color: #337a91;
+   border-radius:5px
+  
+  }
+  
+ body {
+    font-family: "Lato", sans-serif;
+    background-color: #a7d5eb;
+    margin:32px;
+    }
+    
+    h3{
+    
+    text-align:center;
+    
+    }
+    
+    form{
+    
+    margin:auto;
+   
+  
+    
+    }
+    
+    .form-group{
+    
+    color: black;
+    width: 80%;
+    margin:auto;
+    padding:5px;
+    
+    }
+    
+    .was-validated{
+    color: 021a18;
+    margin:auto;
+    
+    }
+    
+    .btn{
+    background-color:#021a18;
+    border-radius:5px
+    
+    }
+    
+    .btn:hover{
+    
+    background-color:#a7d5eb;
+    color:black;
+    
+    }
+    a
+    {
+    color: white;
+    
+    }
+    a:hover{
+    color:black;
+    
+    }
+    #center{
+    
+    text-align:center;
+    padding:5px;
+    
+    }
+    h1{
+  text-align:center;
+  color: #337a91;
+    
+    }
+    
+    .customtable{
+    
+    width:50%;
+    background-color:#337a91;
+    color:white;
+    
+    }
+    
+    .dlink{
+    color:#337a91;
+    text-decoration:none;
+    
+    }
+    
+    .dlink:hover{
+    background-color:#337a91;
+    color:white;
+    text-decoration:none;
+    
+    }
