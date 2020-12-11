@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+     <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,12 +15,13 @@
     <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/common.css">
-  <link rel="stylesheet" href="css/commonlogin.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/commonlogin.css">
 </head>
 <body>
-<jsp:include page="header.jsp"></jsp:include>
-<div><h4>Welcome, Back Office User</h4></div>
+<div class="floatright"><input type="submit" class="btn btn-primary" class="btn" value="Logout"  onclick="location.href='/logout'"></div>
+<jsp:include page="/pages/header.jsp"></jsp:include>
+<div><h4>Welcome, ${auth.name}</h4></div>
 <div class="container" style="position:absolute;">
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item">
@@ -38,7 +41,13 @@
  </div>
 <br><br><br>
 <div class="showhide" style="display:block;" id="companies">
-<div class="floatright"><input type="submit" class="btn btn-primary" class="btn" onclick="location.href='addCompanyIPO.jsp'" value="Add Company IPO"></div>
+<div class="floatright"><input type="submit" class="btn btn-primary" class="btn" onclick="location.href='/backofficeuser/createCompanyIPO'" value="Add Company IPO"></div>
+<c:if test="${company_name!=null}">
+<p style="color:white;font-size:12px"> ${company_name} Company IPO created successfully!
+</c:if>
+<c:if test="${stock_name!=null}">
+<p style="color:white;font-size:12px"> ${stock_name} Stock created successfully!
+</c:if>
 <h3>List of Companies:</h3>
 <br>
 <form action="modifyCompanyDetails.jsp" method="post">
@@ -54,7 +63,7 @@
 
 </div>
 <div class="showhide" style="display:none;" id="stocks">
-<div class="floatright"><input type="submit" class="btn btn-primary" class="btn" onclick="location.href='addStock.jsp'" value="Add Stocks"></div>
+<div class="floatright"><input type="submit" class="btn btn-primary" class="btn" onclick="location.href='/backofficeuser/createStock'" value="Add Stocks"></div>
 <h3>List of Stocks:</h3>
 <br>
 <form action="modifyStock.jsp" method="post">
@@ -69,7 +78,7 @@
 </form>
 </div>
 <div class="showhide" style="display:none;" id="commodities">
-<div class="floatright"><input type="submit" class="btn btn-primary" class="btn" onclick="location.href='addCommodity.jsp'" value="Add Commodities"></div>
+<div class="floatright"><input type="submit" class="btn btn-primary" class="btn" onclick="location.href='/backofficeuser/createCommodity'" value="Add Commodities"></div>
 <div><h3>List of Commodities:</h3></div>
 <br>
 <form action="modifyCommodity.jsp" method="post">
@@ -99,6 +108,6 @@
 </form>
 </div>
 </div>
-<script src="js/backofficeuser.js"></script>
+<script src="/js/backofficeuser.js"></script>
 </body>
 </html>

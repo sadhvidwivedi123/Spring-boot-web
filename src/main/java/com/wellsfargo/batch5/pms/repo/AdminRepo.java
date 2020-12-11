@@ -7,5 +7,7 @@ import com.wellsfargo.batch5.pms.entity.AdminEntity;
 
 @Repository
 public interface AdminRepo extends JpaRepository<AdminEntity, Integer>{
+	
+	boolean existsByUserName(String username);
 
 }

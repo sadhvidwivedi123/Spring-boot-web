@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -42,7 +43,7 @@ public class HomeController {
 		return mv;
 	}
 	
-	@GetMapping({"/login"})
+	@GetMapping("/login")
 	public String loginAction()
 	{
 		return "login";
@@ -62,40 +63,28 @@ public class HomeController {
 		return mv;
 		
 	}
-	/*@PostMapping("/validateLogin")
-	public ModelAndView validateLoginAction(@ModelAttribute("login") @Valid UserLoginModel user, BindingResult result) throws PortfolioException {
-		{
-			ModelAndView mv=null;
-			if(result.hasErrors()) {
-				 mv= new ModelAndView("login","user",user);
-				}
-				else
-				{
-					userDetailsService.loadUserByUsername(user.getUserName());
-					mv = new ModelAndView("redirect:/login");
-				}
-				return mv;
-		}
 	
-	} */
-	public String validateLoginAction(Authentication auth) throws PortfolioException 
+	@GetMapping("/user_home")
+	 String userHomeAction() throws PortfolioException 
 		{
 		String view="login";
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
 		if(!(auth instanceof AnonymousAuthenticationToken) && auth.isAuthenticated())
 		{
 			Set<String> roles =auth.getAuthorities().stream().map(r -> r.getAuthority()).collect(Collectors.toSet());
 			if(roles.contains("investor"))
 			{
-				view="redirect:/investorhome";
+				view="redirect:/investor/investorhome";
 			}
-			else if(roles.contains("backofficeuser"))
+			else if(roles.contains("back_office_user"))
 			{
-				view="redirect:/backOfficeUserhome";
+				view="redirect:/backofficeuser/backOfficeUserHome";
 			}
 			else if(roles.contains("admin"))
 			{
-				view="redirect:/adminHome";
+				view="redirect:/admin/adminHome";
 			}
 			else
 			{

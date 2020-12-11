@@ -1,5 +1,7 @@
 package com.wellsfargo.batch5.pms.service;
 
+import org.springframework.stereotype.Service;
+
 import com.wellsfargo.batch5.pms.exception.PortfolioException;
 import com.wellsfargo.batch5.pms.model.CommisionModel;
 import com.wellsfargo.batch5.pms.model.CommodityModel;

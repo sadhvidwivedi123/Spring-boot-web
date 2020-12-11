@@ -9,16 +9,12 @@ import javax.validation.constraints.NotNull;
 
 public class StockModel {
 	
-	@NotNull(message="Stock Id cannot be null")
-	@NotBlank(message="Stock Id  cannot be blank")
 	private Integer stockId;
 	
 	@NotNull(message="Stock Exchange cannot be null")
 	@NotBlank(message="Stock Exchange cannot be blank")
 	private String stockExchange;
 	
-	@NotNull(message="Current Price cannot be null")
-	@NotBlank(message="Current Price cannot be blank")
 	@DecimalMin(value="0", message="Current Price cannot be less than 0")
 	private Double currentPrice;
 	

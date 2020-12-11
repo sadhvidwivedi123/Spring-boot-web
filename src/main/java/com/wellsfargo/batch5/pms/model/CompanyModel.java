@@ -8,8 +8,6 @@ import javax.validation.constraints.Size;
 
 public class CompanyModel {
 	
-	@NotNull(message="Company code cannot be null")
-	@NotBlank(message="Company code cannot be blank")
 	@Min(value=1,message="Company code cannot be less than 1")
 	private Integer companyCode;
 	
@@ -23,13 +21,9 @@ public class CompanyModel {
 	@Size(min=3,max=30, message="Company Operations length should be between 4 to 30 characters")
 	private String operations;
 	
-	@NotNull(message="Share count cannot be null")
-	@NotBlank(message="Share count cannot be blank")
 	@Min(value=1,message="Share count cannot be less than 1")
 	private Integer shareCount;
 	
-	@NotNull(message="Open Share price cannot be null")
-	@NotBlank(message="Open Share price cannot be blank")
 	@DecimalMin(value="0.1", message="Open Share price cannot be less than 0.1")
 	private Double openSharePrice;
 	
@@ -42,12 +36,9 @@ public class CompanyModel {
 	@NotBlank(message="Currency cannot be blank")
 	private String currency;
 	
-	@NotNull(message="Turn-over cannot be null")
-	@NotBlank(message="Turn-over cannot be blank")
 	@DecimalMin(value="0.1", message="Turn-over cannot be less than 0.1")
 	private Double turnOver;
 	
-	@NotNull(message="Stock cannot be null")
 	private StockModel stock;
 	
 	public CompanyModel()

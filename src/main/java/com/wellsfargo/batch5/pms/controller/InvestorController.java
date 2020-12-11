@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +17,11 @@ import com.wellsfargo.batch5.pms.model.InvestorModel;
 @RequestMapping("/investor")
 public class InvestorController {
 	
-	@PostMapping("/register")
-	public ModelAndView addBookAction(@ModelAttribute("user") @Valid InvestorModel book, BindingResult result) throws PortfolioException {
-		ModelAndView mv=null;
-		
-		return mv;
-		
+	@GetMapping("/investorhome")
+	public String loginAction()
+	{
+		return "/investor/investorhome";
 	}
+	
 
 }

@@ -40,9 +40,7 @@ public class UserModel {
 	@NotBlank(message="Phone number cannot be blank")
 	@Size(min=10,max=10, message="Phone number should have 10 digits")
 	private String phNumber;
-	
-	@NotNull(message="Role cannot be null")
-	@NotBlank(message="Role cannot be blank")
+
 	private String role;
 	
 	public UserModel()
@@ -60,11 +58,11 @@ public class UserModel {
 		this.phNumber = phNumber;
 	}
 	public String getUserName() {
-		return name;
+		return userName;
 	}
 
-	public void setUserName(String name) {
-		this.name = name;
+	public void setUserName(String username) {
+		this.userName = username;
 	}
 
 	public Integer getUserId() {

@@ -6,7 +6,8 @@
   margin:auto;
   padding:10px;
    background-color: #337a91;
-   border-radius:5px
+   border-radius:5px;
+   display:block-inline;
   
   }
   
@@ -141,4 +142,5 @@
     
     .error{
     color:#800000;
+    font-size:12px;
     }

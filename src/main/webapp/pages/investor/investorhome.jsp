@@ -12,10 +12,11 @@
     <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
-<jsp:include page="header.jsp"></jsp:include>
+<div class="floatright"><input type="submit" class="btn btn-primary" class="btn" value="Logout"  onclick="location.href='/logout'"></div>
+<jsp:include page="/pages/header.jsp"></jsp:include>
 <div><h4>Welcome, Investor User</h4></div>
 <div class="floatright">
 <label>Choose a currency:</label>
@@ -143,6 +144,6 @@
 <div id="center"><input type="submit" class="btn btn-primary" class="btn" value="Generate Report"></div></li>
 </ul>
 </div>
-   <script src="js/investorhome.js"></script>
+   <script src="/js/investorhome.js"></script>
 </body>
 </html>

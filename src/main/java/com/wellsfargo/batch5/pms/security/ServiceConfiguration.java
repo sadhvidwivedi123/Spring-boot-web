@@ -35,20 +35,21 @@ public class ServiceConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	public void configure(WebSecurity web) throws Exception{
 		
-		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**","/registration");
+		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
 	}
 	
 	@Override
 	public void configure(HttpSecurity http) throws Exception{
 		
-		/*http.authorizeRequests()
-		.antMatchers("/books","/genres").hasAnyAuthority("MEMBER","LIBRARIAN")
-		.antMatchers("/books/**","/genres/**").hasAuthority("LIBRARIAN");*/
+		http.authorizeRequests()
+		.antMatchers("/backofficeuser/**").hasAuthority("back_office_user")
+		.antMatchers("/admin/**").hasAuthority("admin")
+		.antMatchers("/investor/**").hasAuthority("investor");
 		
 		
-		http.formLogin().loginPage("/login").failureUrl("/login?error=true").defaultSuccessUrl("/")
+		http.formLogin().loginPage("/validateLogin").failureUrl("/login?error=true").defaultSuccessUrl("/user_home")
 		.usernameParameter("userName").passwordParameter("password");
-		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
+		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
 		http.exceptionHandling().accessDeniedPage("/pages/access-denied-page.jsp");
 		
 	}
