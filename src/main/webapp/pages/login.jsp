@@ -16,7 +16,7 @@
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 <div class="form" class="container">
-<form action="login" method="post" class="was-validated">
+<form action="/validateLogin" method="post" class="was-validated">
 <div>
 <div><h3>Login</h3></div>
 <div class="form-group">
@@ -27,7 +27,7 @@
 </div>
 <div id="center"><input type="submit" class="btn btn-primary" class="btn"></div>
 </div>
-<div id="center"><label>Not an existing Investor? &nbsp;</label><a href="register.jsp">Register!</a></div>
+<div id="center"><label>Not an existing Investor? &nbsp;</label><a href="/home">Register!</a></div>
 </form>
 
 </div>

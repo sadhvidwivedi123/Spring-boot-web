@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Add Stock</title>
+<title>Modify Company Details</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -13,40 +13,51 @@
     <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/commonlogin.css">
   <link rel="stylesheet" href="css/common.css">
 </head>
 <body>
-
-<h1>Add a New Stock</h1>
-<form method="get">
-<table>
+<jsp:include page="header.jsp"></jsp:include>
+<h3>Modify Company Details</h3>
+<div class="login-form">
+<form action="" method="post">
+<table class="fontwhite">
 <tr>
 <th>Company Code: </th>
-<td><input type="number" name="cCode"></td>
+<td><input type="number"></td>
 </tr>
 <tr>
-<th>Stock Name: </th>
-<td><input type="text" name="sName"></td>
+<th>Company Title: </th>
+<td><input type="text"></td>
 </tr>
 <tr>
-<th>Stock Exchange: </th>
-<td><input type="text" name="sExchange"></td>
+<th>Operations: </th>
+<td><input type="text"></td>
 </tr>
 <tr>
-<th>Current Price: </th>
-<td><input type="number" name="cPrice"></td>
+<th>Share Count: </th>
+<td><input type="number"></td>
 </tr>
 <tr>
-<th>Date: </th>
-<td><input type="text" name="date"></td>
+<th>Open Share Price(USD): </th>
+<td><input type="number"></td>
 </tr>
 <tr>
-<th>Time: </th>
-<td><input type="text" name="time"></td>
+<th>Sector: </th>
+<td><input type="text"></td>
+</tr>
+<tr>
+<th>Currency: </th>
+<td><input type="text"></td>
+</tr>
+<tr>
+<th>Turn Over: </th>
+<td><input type="number"></td>
 </tr>
 </table>
 <br>
-<button>Add</button>
+<div><button class="btn">Update</button></div>
 </form>
+</div>
 </body>
 </html>

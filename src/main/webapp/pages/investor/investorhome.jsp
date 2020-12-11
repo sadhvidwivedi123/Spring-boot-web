@@ -9,7 +9,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-   <script src="/js/pms.js"></script>
     <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -78,7 +77,7 @@
         <h4>Portfolio Wallet</h4>
         </div>
         <div class="modal-body">
-          <p>Your current wallet balance is: 1500 INR</p>
+          <p>Your current wallet balance is: <strong>1500 INR</strong></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -144,39 +143,6 @@
 <div id="center"><input type="submit" class="btn btn-primary" class="btn" value="Generate Report"></div></li>
 </ul>
 </div>
-<script>
-	$("#dashboardlink").click(function () {
-		$(".showhide").hide();
-		$("#choosecurrency").show("slow");
-		$("#dashboard").show("slow");
-		});
-	$("#recentcomlink").click(function () {
-		$(".showhide").hide();
-		$("#recentlyviewedcompany").show("slow");
-		
-		});
-	$("#companieslink").click(function () {
-		$(".showhide").hide();
-		$("#companies").show("slow");
-		
-		});
-	$("#stockslink").click(function () {
-		$(".showhide").hide();
-		$("#stocks").show("slow");
-		
-		});
-	$("#commoditieslink").click(function () {
-		$(".showhide").hide();
-		$("#commodities").show("slow");
-		
-		});
-	$("#myprofilelink").click(function () {
-		$(".showhide").hide();
-		$("#myprofile").show("slow");
-		
-		});
-
-	
-</script>
+   <script src="js/investorhome.js"></script>
 </body>
 </html>

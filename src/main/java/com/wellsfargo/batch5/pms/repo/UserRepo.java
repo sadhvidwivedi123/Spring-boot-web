@@ -6,5 +6,9 @@ import com.wellsfargo.batch5.pms.entity.UserEntity;
 
 @Repository
 public interface UserRepo extends JpaRepository<UserEntity, Integer>{
+	
+	boolean existsByUserName(String userName);
+	
+	UserEntity findByUserName(String userName);
 
 }

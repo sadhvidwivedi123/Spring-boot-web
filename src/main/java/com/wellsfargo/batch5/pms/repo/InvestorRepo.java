@@ -6,5 +6,7 @@ import com.wellsfargo.batch5.pms.entity.InvestorEntity;
 
 @Repository
 public interface InvestorRepo extends JpaRepository<InvestorEntity, Integer>{
+	
+	boolean existsByPanId(String pan);
 
 }

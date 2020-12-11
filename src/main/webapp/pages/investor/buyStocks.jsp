@@ -15,7 +15,7 @@
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
-<div><h4>Buy Stocks</h4></div>
+<div id="center"><h3>Buy Stocks</h3></div>
 <form action="" method="get">
 <div class="floatright">
     
@@ -25,10 +25,10 @@
   <br>
 </form>
 <br>
-<h3>Company 1 Stock Details</h3>
+<h5>Company 1 Stock Details</h5>
 <div class="login-form">
 <form action="orderConfirmation.jsp" method="post">
-<table>
+<table class="fontwhite">
 <tr><td><label><strong>Exchange: </strong></label></td><td><input type="radio" id="BSE" name="Exchange" value="BSE"><label>BSE</label><input type="radio" id="NSE" name="Exchange" value="NSE"><label>NSE</label></td></tr>
 <tr><td><label><strong>Stock Name: </strong></label></td><td><label>XYZ </label></td></tr>
 <tr><td><label><strong>Current Stock Price:   </strong></label></td><td><label>Rs. 1500 </label></td></tr>

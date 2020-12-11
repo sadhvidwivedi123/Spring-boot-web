@@ -35,7 +35,7 @@ public class InvestorEntity extends UserEntity{
 	private Double amountEarned;
 	
 	@Embedded
-	private PortfolioWallet portWallet;
+	private PortfolioWalletEntity portWallet;
 	
 	@OneToMany(mappedBy="investor")
 	private Set<InvestorCommodityDetailsEntity> invCommodity;
@@ -43,11 +43,11 @@ public class InvestorEntity extends UserEntity{
 	@OneToMany(mappedBy="investor")
 	private Set<InvestorStockDetailsEntity> invStock;
 	
-	public PortfolioWallet getPortWallet() {
+	public PortfolioWalletEntity getPortWallet() {
 		return portWallet;
 	}
 
-	public void setPortWallet(PortfolioWallet portWallet) {
+	public void setPortWallet(PortfolioWalletEntity portWallet) {
 		this.portWallet = portWallet;
 	}
 

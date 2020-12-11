@@ -25,7 +25,7 @@
   <br>
 </form>
 <form action="orderConfirmation.jsp" method=post class="login-form">
-<table>
+<table class="fontwhite">
 <tr><th>Commodity Name: </th><td>Crude Oil</td></tr>
 <tr><th>Current Price: </th><td>1500</td></tr>
 <tr><th>Quantity: </th><td><input type="number" name="quantity"></td></tr>

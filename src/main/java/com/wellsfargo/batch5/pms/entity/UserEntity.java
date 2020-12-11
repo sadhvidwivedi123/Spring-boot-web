@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,11 +13,13 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-@Inheritance(strategy = InheritanceType.JOINED)
+
 @DiscriminatorColumn(name="role",discriminatorType = DiscriminatorType.STRING)
 @Entity
 @Table(name="user_details")
-public abstract class UserEntity {
+@Inheritance(strategy = InheritanceType.JOINED)
+//@DiscriminatorValue("direct_user")
+public class UserEntity {
 	@GeneratedValue
 	@Id
 	@Column(name="user_id")
@@ -31,8 +34,8 @@ public abstract class UserEntity {
 	@Column(name="name")
 	private String name;
 	
-	//@Column(name="role")
-	//public String role;
+	@Column(name="role", insertable=false, updatable = false)
+	private String role;
 	
 	@Column(name="email")
 	private String emailId;
@@ -55,11 +58,11 @@ public abstract class UserEntity {
 		this.phNumber = phNumber;
 	}
 	public String getUserName() {
-		return name;
+		return userName;
 	}
 
 	public void setUserName(String name) {
-		this.name = name;
+		this.userName = name;
 	}
 
 	public Integer getUserId() {
@@ -74,12 +77,6 @@ public abstract class UserEntity {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	//public String getRoleId() {
-	//	return role;
-	//}
-	//public void setRoleId(String role) {
-	//	this.role = role;
-	//}
 	public String getEmailId() {
 		return emailId;
 	}
@@ -99,6 +96,14 @@ public abstract class UserEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 		
 }

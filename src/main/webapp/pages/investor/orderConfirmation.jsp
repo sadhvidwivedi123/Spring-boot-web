@@ -17,7 +17,7 @@
 <jsp:include page="header.jsp"></jsp:include>
 <h3>Please confirm transaction details</h3>
 <div class="login-form">
-<table>
+<table class="fontwhite">
 <tr><td><label><strong>Order Type: </strong></label></td><td><label>Buy/Sell</label></td></tr>
 <tr><td><label><strong>Exchange: </strong></label></td><td><label>BSE</label></td></tr>
 <tr><td><label><strong>Stock/Commodity Name: </strong></label></td><td><label>XYZ </label></td></tr>

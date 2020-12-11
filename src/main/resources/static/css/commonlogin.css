@@ -46,7 +46,8 @@
     
     .btn{
     background-color:#021a18;
-    border-radius:5px
+    border-radius:5px;
+    color:white;
     
     }
     
@@ -54,6 +55,7 @@
     
     background-color:#a7d5eb;
     color:black;
+    border-color:black;
     
     }
     a
@@ -96,4 +98,8 @@
     color:white;
     text-decoration:none;
     
+    }
+    .margin-auto{
+    
+    margin:auto;
     }

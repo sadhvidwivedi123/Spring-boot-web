@@ -33,17 +33,17 @@ public class InvestorModel extends UserModel{
 	
 	@NotNull(message="Portfolio wallet cannot be null")
 	@NotBlank(message="Portfolio wallet cannot be blank")
-	private PortfolioWallet portWallet;
+	private PortfolioWalletModel portWallet;
 
 	private Set<InvestorCommodityDetailsModel> invCommodity;
 
 	private Set<InvestorStockDetailsModel> invStock;
 	
-	public PortfolioWallet getPortWallet() {
+	public PortfolioWalletModel getPortWallet() {
 		return portWallet;
 	}
 
-	public void setPortWallet(PortfolioWallet portWallet) {
+	public void setPortWallet(PortfolioWalletModel portWallet) {
 		this.portWallet = portWallet;
 	}
 

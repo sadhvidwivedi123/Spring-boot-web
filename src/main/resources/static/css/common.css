@@ -16,7 +16,7 @@
     margin:32px;
     }
     
-    h3{
+    h3,h5{
     
     text-align:center;
     
@@ -30,6 +30,9 @@
     
     }
     
+    .fontwhite{
+    color:white;
+    }
     .form-group{
     
     color: black;
@@ -47,7 +50,8 @@
     
     .btn{
     background-color:#021a18;
-    border-radius:5px
+    border-radius:5px;
+    color:white;
     
     }
     
@@ -133,4 +137,8 @@
     background-color:#337a91;
     color:white;
     
+    }
+    
+    .error{
+    color:#800000;
     }

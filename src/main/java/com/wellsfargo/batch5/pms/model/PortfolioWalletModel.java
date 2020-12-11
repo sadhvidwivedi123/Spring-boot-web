@@ -4,7 +4,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class PortfolioWallet {
+public class PortfolioWalletModel {
 	
 
 	@NotNull(message="Portfolio wallet cannot be null")
@@ -12,12 +12,12 @@ public class PortfolioWallet {
 	@DecimalMin(value="0", message="Portfolio wallet cannot be less than 0")
 	private Double walletBalance;
 	
-	public PortfolioWallet()
+	public PortfolioWalletModel()
 	{
 		
 	}
 
-	public PortfolioWallet(Double walletBalance) {
+	public PortfolioWalletModel(Double walletBalance) {
 		super();
 		this.walletBalance = walletBalance;
 	}

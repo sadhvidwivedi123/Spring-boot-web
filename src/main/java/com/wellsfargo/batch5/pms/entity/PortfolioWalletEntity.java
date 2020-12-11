@@ -4,17 +4,17 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class PortfolioWallet {
+public class PortfolioWalletEntity {
 	
 	@Column(name="walletBalance")
 	private Double walletBalance;
 	
-	public PortfolioWallet()
+	public PortfolioWalletEntity()
 	{
 		
 	}
 
-	public PortfolioWallet(Double walletBalance) {
+	public PortfolioWalletEntity(Double walletBalance) {
 		super();
 		this.walletBalance = walletBalance;
 	}

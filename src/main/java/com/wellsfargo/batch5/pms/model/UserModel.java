@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public abstract class UserModel {
+public class UserModel {
 	
 	private Integer userId;
 	
@@ -18,6 +18,12 @@ public abstract class UserModel {
 	@NotBlank(message="Password cannot be blank")
 	@Size(min=4, max=20, message="Password should be between 4 to 20 characters")
 	private String password;
+	
+	@NotNull(message="Confirm Password cannot be null")
+	@NotBlank(message="Confirm Password cannot be blank")
+	@Size(min=4, max=20, message="Confirm Password should be between 4 to 20 characters")
+	private String confirmPassword;
+	
 	@NotNull(message="Name cannot be null")
 	@NotBlank(message="Name cannot be blank")
 	@Size(min=4, message="Name should be more than 4 characters")
@@ -34,6 +40,10 @@ public abstract class UserModel {
 	@NotBlank(message="Phone number cannot be blank")
 	@Size(min=10,max=10, message="Phone number should have 10 digits")
 	private String phNumber;
+	
+	@NotNull(message="Role cannot be null")
+	@NotBlank(message="Role cannot be blank")
+	private String role;
 	
 	public UserModel()
 	{
@@ -94,6 +104,22 @@ public abstract class UserModel {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 		
 }

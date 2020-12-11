@@ -11,27 +11,29 @@
     <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/commonlogin.css">
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
-<div class="container" class="login-form">
-<form  class="was-validated">
-<div><h3>Add a New Commodity</h3></div>
+<div class="form" class="container">
+<form action="login" method="post" class="was-validated">
+<div>
+<div><h3>Add a new Commodity</h3></div>
 <div class="form-group">
-<label class="control-label col-sm-4" for="comCode">Commodity Code: </label>
-<div><input class="form-control" placeholder="Commodity Code" type="number"></div>
+<label for="comCode"><strong>Commodity Code:</strong> </label>
+<input class="form-control" placeholder="Commodity Code" type="number" required>
 </div>
 <div class="form-group">
-<label class="control-label col-sm-4" for="comName">Commodity Name: </label>
-<div><input class="form-control" placeholder="Commodity Name" type="text"></div>
+<label for="comName"><strong>Commodity Name: </strong></label>
+<input class="form-control" placeholder="Commodity Name" type="text" required>
 </div>
 <div class="form-group">
-<label class="control-label col-sm-4" for="price">Current Price: </label>
-<div class="col-sm-10"><input type="number" class="form-control" placeholder="Commodity Price"></div>
+<label for="price"><strong>Current Price: </strong></label>
+<input type="number" class="form-control" placeholder="Commodity Price" required>
 </div>
 <br>
 <div id="center"><input type="submit" class="btn btn-primary" class="btn" value="Add Commodity"></div>
+</div>
 </form>
 </div>
 </body>
