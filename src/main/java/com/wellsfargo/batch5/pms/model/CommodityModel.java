@@ -8,8 +8,6 @@ import javax.validation.constraints.Size;
 
 public class CommodityModel {
 	
-	@NotNull(message="Commodity code cannot be null")
-	@NotBlank(message="Commodity code cannot be blank")
 	@Min(value=1,message="Commodity code cannot be less than 1")
 	private Integer commodityCode;
 	
@@ -18,8 +16,6 @@ public class CommodityModel {
 	@Size(min=3,max=30, message="Commodity name length should be between 4 to 30 characters")
 	private String commodityName;
 	
-	@NotNull(message="Commodity price cannot be null")
-	@NotBlank(message="Commodity price cannot be blank")
 	@DecimalMin(value="0.1", message="Commodity price cannot be less than 0.1")
 	private Double currentPrice;
 	

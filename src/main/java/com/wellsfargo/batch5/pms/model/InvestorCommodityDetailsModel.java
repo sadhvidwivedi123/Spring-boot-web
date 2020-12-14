@@ -18,9 +18,9 @@ public class InvestorCommodityDetailsModel{
 	@NotBlank(message="Commodity cannot be blank")
 	private CommodityModel commodity;
 	
-	@NotNull(message="Unit cannot be null")
-	@NotBlank(message="Unit  cannot be blank")
-	private Integer unit;
+	@NotNull(message="Quantity cannot be null")
+	@NotBlank(message="Quantity  cannot be blank")
+	private Integer quantity;
 	
 	@NotNull(message="Date cannot be null")
 	private LocalDate date;
@@ -33,13 +33,13 @@ public class InvestorCommodityDetailsModel{
 	{
 		
 	}
-	public InvestorCommodityDetailsModel(Integer investorCommKey, InvestorModel investor, CommodityModel commodity, Integer unit,
+	public InvestorCommodityDetailsModel(Integer investorCommKey, InvestorModel investor, CommodityModel commodity, Integer quantity,
 			LocalDate date) {
 		super();
 		this.investorCommKey = investorCommKey;
 		this.investor = investor;
 		this.commodity = commodity;
-		this.unit = unit;
+		this.quantity = quantity;
 		this.date = date;
 	}
 	
@@ -64,12 +64,12 @@ public class InvestorCommodityDetailsModel{
 		this.commodity = commodity;
 	}
 
-	public Integer getUnit() {
-		return unit;
+	public Integer getQuantity() {
+		return quantity;
 	}
 
-	public void setUnit(Integer unit) {
-		this.unit = unit;
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 	public LocalDate getDate() {

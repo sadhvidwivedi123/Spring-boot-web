@@ -4,10 +4,17 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 public class StockModel {
+	
+	@Min(value=1, message="Company Id cannot be less than 1")
+	private Integer companyId;
 	
 	private Integer stockId;
 	
@@ -18,13 +25,12 @@ public class StockModel {
 	@DecimalMin(value="0", message="Current Price cannot be less than 0")
 	private Double currentPrice;
 	
-	@NotNull(message="Date cannot be null")
+	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate date;
 	
-	@NotNull(message="Time cannot be null")
+	@DateTimeFormat(iso = ISO.TIME)
 	private LocalTime time;
 	
-	@NotNull(message="Company cannot be null")
 	private CompanyModel company;
 
 	private Set<InvestorStockDetailsModel> invStock;
@@ -34,13 +40,13 @@ public class StockModel {
 		
 	}
 	public StockModel( String stockExchange, Double currentPrice, LocalDate date, LocalTime time,
-			Integer stockId) {
+			Integer companyId) {
 		super();
 		this.stockExchange = stockExchange;
 		this.currentPrice = currentPrice;
 		this.date = date;
 		this.time = time;
-		this.stockId = stockId;
+		this.companyId = companyId;
 	}
 
 	/*public Integer getCompanyCode() {
@@ -72,6 +78,18 @@ public class StockModel {
 	}
 	public void setTime(LocalTime time) {
 		this.time = time;
+	}
+	public Integer getCompanyId() {
+		return companyId;
+	}
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
+	}
+	public CompanyModel getCompany() {
+		return company;
+	}
+	public void setCompany(CompanyModel company) {
+		this.company = company;
 	}
 	public Integer getStockId() {
 		return stockId;

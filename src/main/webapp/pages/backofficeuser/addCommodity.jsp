@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+            <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,30 +13,30 @@
     <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/commonlogin.css">
+  <link rel="stylesheet" href="/css/commonlogin.css">
 </head>
 <body>
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="/pages/header.jsp"></jsp:include>
 <div class="form" class="container">
-<form action="login" method="post" class="was-validated">
+<form:form action="/backofficeuser/createCommodity" method="post" class="was-validated" modelAttribute="commodity">
 <div>
-<div><h3>Add a new Commodity</h3></div>
+<div><h3>Add Commodity</h3></div>
 <div class="form-group">
-<label for="comCode"><strong>Commodity Code:</strong> </label>
-<input class="form-control" placeholder="Commodity Code" type="number" required>
+<form:input class="form-control" path="commodityCode" name="commodityCode" placeholder="Enter Commodity Code" type="number" required="required"/>
+<div><form:errors path = "commodityCode" cssClass="error" /></div>
 </div>
 <div class="form-group">
-<label for="comName"><strong>Commodity Name: </strong></label>
-<input class="form-control" placeholder="Commodity Name" type="text" required>
+<form:input class="form-control" path="commodityName" name="commodityName" placeholder="Enter Commodity Name" type="text" required="required"/>
+<div><form:errors path = "commodityName" cssClass="error" /></div>
 </div>
 <div class="form-group">
-<label for="price"><strong>Current Price: </strong></label>
-<input type="number" class="form-control" placeholder="Commodity Price" required>
+<form:input type="number" path="currentPrice" name="currentPrice" class="form-control" placeholder="Enter Commodity Price" required="required"/>
+<div><form:errors path = "currentPrice" cssClass="error" /></div>
 </div>
 <br>
 <div id="center"><input type="submit" class="btn btn-primary" class="btn" value="Add Commodity"></div>
 </div>
-</form>
+</form:form>
 </div>
 </body>
 </html>

@@ -11,11 +11,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-   <link rel="stylesheet" href="css/commonlogin.css">
+   <link rel="stylesheet" href="/css/commonlogin.css">
 
 </head>
 <body>
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="/pages/header.jsp"></jsp:include>
 <div><h4><strong>Company Details</strong></h4></div>
 <br>
 <table class="table table-striped table-hover table-light customtable"><tr><td><strong>Company Code: </strong></td><td>1</td></tr>

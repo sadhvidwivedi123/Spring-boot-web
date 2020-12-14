@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -17,6 +18,7 @@ import javax.persistence.Table;
 public class StockEntity {
 	
 	@Id
+	@GeneratedValue
 	@Column(name="stock_id")
 	private Integer stockId;
 	
@@ -32,7 +34,7 @@ public class StockEntity {
 	@Column(name="time")
 	private LocalTime time;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name="company_code")
 	private CompanyEntity company;
 	
@@ -44,15 +46,22 @@ public class StockEntity {
 		
 	}
 	public StockEntity( String stockExchange, Double currentPrice, LocalDate date, LocalTime time,
-			Integer stockId) {
+			Integer companyId) {
 		super();
 		this.stockExchange = stockExchange;
 		this.currentPrice = currentPrice;
 		this.date = date;
 		this.time = time;
+	}
+	
+	
+
+	public Integer getStockId() {
+		return stockId;
+	}
+	public void setStockId(Integer stockId) {
 		this.stockId = stockId;
 	}
-
 	/*public Integer getCompanyCode() {
 		return companyCode;
 	}
@@ -83,11 +92,12 @@ public class StockEntity {
 	public void setTime(LocalTime time) {
 		this.time = time;
 	}
-	public Integer getStockId() {
-		return stockId;
+	
+	public CompanyEntity getCompany() {
+		return company;
 	}
-	public void setStockId(Integer stockId) {
-		this.stockId = stockId;
+	public void setCompany(CompanyEntity company) {
+		this.company = company;
 	}
 	
 	

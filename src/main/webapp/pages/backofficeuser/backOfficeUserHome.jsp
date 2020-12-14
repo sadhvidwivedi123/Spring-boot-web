@@ -43,54 +43,103 @@
 <div class="showhide" style="display:block;" id="companies">
 <div class="floatright"><input type="submit" class="btn btn-primary" class="btn" onclick="location.href='/backofficeuser/createCompanyIPO'" value="Add Company IPO"></div>
 <c:if test="${company_name!=null}">
-<p style="color:white;font-size:12px"> ${company_name} Company IPO created successfully!
+<p style="color:white;font-size:12px"> ${company_name} Company IPO ${isUpdated?"updated":"created"}  successfully!
 </c:if>
-<c:if test="${stock_name!=null}">
-<p style="color:white;font-size:12px"> ${stock_name} Stock created successfully!
+<c:if test="${stock!=null}">
+<p style="color:white;font-size:12px"> Stock for ${stock} ${isUpdated?"updated":"created"} successfully!
+</c:if>
+<c:if test="${commodity!=null}">
+<p style="color:white;font-size:12px"> Commodity:  ${commodity} ${isUpdated?"updated":"created"} successfully!
 </c:if>
 <h3>List of Companies:</h3>
 <br>
-<form action="modifyCompanyDetails.jsp" method="post">
-<table class="table table-striped table-hover table-light customtable margin-auto">
-<tr><td>Select</td><th>Company Code</th><th>Company Title</th><th>Operations</th><th>Share Count</th><th>Open Share Price(USD)</th><th>Sector</th><th>Currency</th><th>Turn Over</th></tr>
-<tr><td><input type="checkbox" name="chk1">&nbsp;</td><td>1</td><td>Company1</td><td>APAC</td><td>100000</td><td>12</td><td>Manufacturing</td><td>INR</td><td>12000900</td></tr>
-<tr><td><input type="checkbox" name="chk2">&nbsp;</td><td>2</td><td>Company2</td><td>EMEA</td><td>10000</td><td>14</td><td>Finance</td><td>EUR</td><td>15000</td></tr>
-<tr><td><input type="checkbox" name="chk3">&nbsp;</td><td>3</td><td>Company3</td><td>USA</td><td>500000</td><td>8</td><td>Chemical</td><td>USD</td><td>3000000</td></tr>
+<form:form action="/backofficeuser/modifyCompany" method="post">
+
+<c:choose>
+				<c:when test="${company_list==null || company_list.isEmpty() }">
+					<div class="alert alert-info">
+						<p>No Companies added yet! Please go ahead and add new company IPO.
+					</div>
+				</c:when>
+				<c:otherwise>
+<div class=" table-wrapper-scroll-y my-custom-scrollbar">
+<table class="table table-striped table-hover table-light customtable margin-auto tableFixHead" style="width:100%">
+<thead>
+<tr><th>Select</th><th>Company Code</th><th>Company Title</th><th>Operations</th><th>Share Count</th><th>Open Share Price(USD)</th><th>Sector</th><th>Currency</th><th>Turn Over</th></tr>
+</thead>
+<tbody>
+<c:forEach var="cl" items="${company_list}">
+<tr><td><input type="radio" id="${cl.companyCode}" name="company" value="${cl.companyCode}">&nbsp;</td><td>${cl.companyCode}</td><td>${cl.companyTitle}</td><td>${cl.operations}</td><td>${cl.shareCount}</td><td>${cl.openSharePrice}</td><td>${cl.sector}</td><td>${cl.currency}</td><td>${cl.turnOver}</td></tr>
+</c:forEach>
+</tbody>
 </table>
+</div>
 <br>
 <div id="center"><input type="submit" class="btn btn-primary" class="btn" value="Modify Selected Company"></div>
-</form>
+</c:otherwise>
+</c:choose>
+</form:form>
 
 </div>
 <div class="showhide" style="display:none;" id="stocks">
 <div class="floatright"><input type="submit" class="btn btn-primary" class="btn" onclick="location.href='/backofficeuser/createStock'" value="Add Stocks"></div>
 <h3>List of Stocks:</h3>
 <br>
-<form action="modifyStock.jsp" method="post">
-<table class="table table-striped table-hover table-light customtable margin-auto">
-<tr><td>Select</td><th>Company Code</th><th>Stock Name</th><th>Stock Exchange</th><th>Current Price</th><th>Date</th><th>Time</th></tr>
-<tr><td><input type="checkbox" name="stock1">&nbsp;</td><td>1</td><td>Stock Name1</td><td>BSE and NSE</td><td>13</td><td>11/12/2004</td><td>11:34</td></tr>
-<tr><td><input type="checkbox" name="stock2">&nbsp;</td><td>2</td><td>Stock Name2</td><td>NSE</td><td>21</td><td>01/02/2016</td><td>10:02</td></tr>
-<tr><td><input type="checkbox" name="stock3">&nbsp;</td><td>3</td><td>Stock Name3</td><td>BSE</td><td>14</td><td>01/01/2020</td><td>12:04</td></tr>
+<form:form action="/backofficeuser/modifyStock" method="post">
+<c:choose>
+				<c:when test="${stock_list==null || stock_list.isEmpty() }">
+					<div class="alert alert-info">
+						<p>No Stocks added yet! Please go ahead and add new stock.
+					</div>
+				</c:when>
+				<c:otherwise>
+<div class=" table-wrapper-scroll-y my-custom-scrollbar">
+<table class="table table-striped table-hover table-light customtable margin-auto tableFixHead" style="width:60%">
+<thead>
+<tr><th>Select</th><th>Company Code</th><th>Stock Exchange</th><th>Current Price</th><th>Date</th><th>Time</th></tr>
+</thead>
+<tbody>
+<c:forEach var="sl" items="${stock_list}">
+<tr><td><input type="radio" id="${sl.companyId}" name="stock" value="${sl.companyId}">&nbsp;</td><td>${sl.companyId}</td><td>${sl.stockExchange}</td><td>${sl.currentPrice}</td><td>${sl.date}</td><td>${sl.time}</td></tr>
+</c:forEach>
+</tbody>
 </table>
+</div>
 <br>
 <div id="center"><input type="submit" class="btn btn-primary" class="btn" value="Modify Selected Stock"></div>
-</form>
+</c:otherwise>
+</c:choose>
+</form:form>
 </div>
 <div class="showhide" style="display:none;" id="commodities">
 <div class="floatright"><input type="submit" class="btn btn-primary" class="btn" onclick="location.href='/backofficeuser/createCommodity'" value="Add Commodities"></div>
 <div><h3>List of Commodities:</h3></div>
 <br>
-<form action="modifyCommodity.jsp" method="post">
-<table class="table table-striped table-hover table-light customtable margin-auto">
-<tr><td>Select</td><th>Commodity Code</th><th>Commodity Name</th><th>Current Price</th></tr>
-<tr><td><input type="checkbox" name="com1">&nbsp;</td><td>1</td><td>Crude Oil</td><td>30</td></tr>
-<tr><td><input type="checkbox" name="com2">&nbsp;</td><td>2</td><td>Gold</td><td>700</td></tr>
-<tr><td><input type="checkbox" name="com3">&nbsp;</td><td>3</td><td>Silver</td><td>830</td></tr>
+<form:form action="/backofficeuser/modifyCommodity" method="post">
+<c:choose>
+				<c:when test="${commodity_list==null || commodity_list.isEmpty() }">
+					<div class="alert alert-info">
+						<p>No Commodities added yet! Please go ahead and add new commodity.
+					</div>
+				</c:when>
+				<c:otherwise>
+<div class=" table-wrapper-scroll-y my-custom-scrollbar">
+<table class="table table-striped table-hover table-light customtable margin-auto tableFixHead">
+<thead>
+<tr><th>Select</th><th>Commodity Code</th><th>Commodity Name</th><th>Current Price</th></tr>
+</thead>
+<tbody>
+<c:forEach var="coml" items="${commodity_list}">
+<tr><td><input type="radio" id="${coml.commodityCode}" name="commodity" value="${coml.commodityCode}">&nbsp;</td><td>${coml.commodityCode}</td><td>${coml.commodityName}</td><td>${coml.currentPrice}</td></tr>
+</c:forEach>
+</tbody>
 </table>
+</div>
 <br>
 <div id="center"><input type="submit" class="btn btn-primary" class="btn" value="Modify Selected Commodity"></div>
-</form>
+</c:otherwise>
+</c:choose>
+</form:form>
 
 </div>
 <div class="showhide" style="display:none;" id="reports">

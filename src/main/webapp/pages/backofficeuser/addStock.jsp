@@ -1,5 +1,10 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="java.time.LocalDate"%>
+<%@page import="java.time.LocalTime"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+     <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,36 +18,43 @@
     <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/commonlogin.css">
+  <link rel="stylesheet" href="/css/commonlogin.css">
 </head>
 <body>
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="/pages/header.jsp"></jsp:include>
 <div class="form" class="container">
-<form action="login" method="post" class="was-validated">
+<form:form action="/backofficeuser/createStock" method="post" class="was-validated" modelAttribute="stock">
 <div>
-<div><h3>Add a New Stock</h3></div>
+<div><h3>Add Stock</h3></div>
 <div class="form-group">
-<label><strong>Company Code: </strong></label><input type="number" class="form-control" placeholder="Enter Company Code" required name="cCode">
+<form:input type="number" path = "companyId" class="form-control" placeholder="Enter Company Code" required="required" name="companyId"/>
+<div><form:errors path = "companyId" cssClass="error" /></div>
 </div>
 <div class="form-group">
-<label><strong>Stock Name: </strong></label><input type="text" class="form-control" placeholder="Enter Stock Name" required name="sName">
+ <form:select path="stockExchange" class="form-control" placeholder="Enter Stock Exchange" required="required" name="stockExchange">  
+ <form:option selected="selected" disabled="disabled" value ="" label="Select Stock Exchange"/>
+ <form:option value="NSE" label="NSE"/>  
+ <form:option value="BSE" label="BSE"/>
+ </form:select>
+ <div><form:errors path = "stockExchange" cssClass="error" /></div>
+
 </div>
 <div class="form-group">
-<label><strong>Stock Exchange: </strong></label><input type="text" class="form-control" placeholder="Enter Stock Exchange" required name="sExchange">
+<form:input type="number" path = "currentPrice" class="form-control" placeholder="Enter Price" required="required" name="currentPrice"/>
+<div><form:errors path = "currentPrice" cssClass="error" /></div>
 </div>
 <div class="form-group">
-<label><strong>Current Price: </strong></label><input type="number" class="form-control" placeholder="Enter Price" required name="cPrice">
+<form:input type="date" path = "date" class="form-control" required="required" name="date" readonly="true" value="<%=LocalDate.now()%>"/>
+<div><form:errors path = "date" cssClass="error" /></div>
 </div>
 <div class="form-group">
-<label><strong>Date: </strong></label><input type="date" class="form-control" required name="date">
-</div>
-<div class="form-group">
-<label><strong>Time: </strong></label><input type="text" class="form-control" placeholder="Enter Time" required name="time">
+<form:input type="text" path = "time" class="form-control" placeholder="Enter Time" required="required" name="time" readonly="true" value="<%=LocalTime.now().format(DateTimeFormatter.ofPattern(\"HH:mm:ss\"))%>"/>
+<div><form:errors path = "time" cssClass="error" /></div>
 </div>
 <br>
 <div id="center"><button class="btn">Add</button></div>
 </div>
-</form>
+</form:form>
 </div>
 </body>
 </html>

@@ -32,6 +32,11 @@ public class InvestorStockDetailsModel {
 	@NotNull(message="Date cannot be null")
 	private LocalDate date;
 
+	public InvestorStockDetailsModel()
+	{
+		
+	}
+	
 	public InvestorStockDetailsModel(Integer investorStockId, InvestorModel investor, StockModel stock, Integer unit, LocalDate date) {
 		super();
 		this.investorStockId = investorStockId;

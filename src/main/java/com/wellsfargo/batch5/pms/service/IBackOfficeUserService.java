@@ -1,5 +1,7 @@
 package com.wellsfargo.batch5.pms.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.wellsfargo.batch5.pms.exception.PortfolioException;
@@ -23,4 +25,19 @@ public interface IBackOfficeUserService {
 	CompanyModel modifyCompany(CompanyModel company)throws PortfolioException;
 	
 	void generateReport(CommisionModel commission)throws PortfolioException;
+	
+	List<CompanyModel> getCompanyList() throws PortfolioException;
+	
+	List<StockModel> getStockList() throws PortfolioException;
+	
+	List<CommodityModel> getCommodityList() throws PortfolioException;
+	
+	CommodityModel getCommodityByCommodityCode(Integer commodityCode)throws PortfolioException;
+
+	StockModel getStockByCompanyCode(Integer companyCode) throws PortfolioException;
+
+	CompanyModel getCompanyByCompanyCode(Integer companyCode) throws PortfolioException;
+
+	CommodityModel getCommodityByCommodityName(String commodityName)throws PortfolioException;
+
 }

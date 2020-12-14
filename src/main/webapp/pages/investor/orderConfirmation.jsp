@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+       <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,21 +13,22 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-   <link rel="stylesheet" href="css/common.css">
+   <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="/pages/header.jsp"></jsp:include>
 <h3>Please confirm transaction details</h3>
+<form:form action="/investor/sellCommodityConfirm" method="post" name="sellCommodityConfirm" modelAttribute="commodity">
 <div class="login-form">
 <table class="fontwhite">
-<tr><td><label><strong>Order Type: </strong></label></td><td><label>Buy/Sell</label></td></tr>
-<tr><td><label><strong>Exchange: </strong></label></td><td><label>BSE</label></td></tr>
-<tr><td><label><strong>Stock/Commodity Name: </strong></label></td><td><label>XYZ </label></td></tr>
-<tr><td><label><strong>Current Stock Price:   </strong></label></td><td><label>Rs. 1500 </label></td></tr>
-<tr><td><label><strong>Quantity:   </strong></label></td><td><label>5 </label></td></tr>
-<tr><td><label><strong>Total Price:   </strong></label></td><td><label>Rs. 20000 </label></td></tr>
+<tr><td><label><strong>Order Type: </strong></label></td><td><label>${buy?"Buy":"Sell" }</label></td></tr>
+<tr><td><label><strong>${isStock?"Stock":"Commodity" } Name: </strong></label></td><td><input type="text" name="commodityName" readonly="readonly" value="${commodity.commodityName }"/></td></tr>
+<tr><td><label><strong>Current Price:   </strong></label></td><td><input type="text" name="currentPrice" readonly="readonly" value="${commodity.currentPrice }"/></td></tr>
+<tr><td><label><strong>Quantity:   </strong></label></td><td><input type="text" name="quantity" readonly="readonly" value="${quantity }"/></td></tr>
+<tr><td><label><strong>Total Price:   </strong></label></td><td><input type="text" name="totalPrice" readonly="readonly" value="${quantity*commodity.currentPrice }"/></td></tr>
 </table>
-<span><button type="button" class="btn btn-primary" onclick="javascript:history.back()">Back</button><button class="btn btn-primary" type="button">Confirm</button></span>
+<span><button type="button" class="btn btn-primary" onclick="javascript:history.back()">Back</button><button class="btn btn-primary" type="submit">Confirm</button></span>
 </div>
+</form:form>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.wellsfargo.batch5.pms.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.wellsfargo.batch5.pms.exception.PortfolioException;
 import com.wellsfargo.batch5.pms.model.UserModel;
@@ -24,7 +25,7 @@ public class AdminServiceImpl implements IAdminService{
 	private BackOfficeUserRepo backOfficeUserRepo;
 	
 	
-
+	@Transactional
 	@Override
 	public UserModel addbackOfficeUser(UserModel bouser) throws PortfolioException {
 		

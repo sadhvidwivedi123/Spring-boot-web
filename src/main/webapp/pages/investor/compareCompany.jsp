@@ -12,10 +12,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="js/searchlist.js"></script>
-   <link rel="stylesheet" href="css/commonlogin.css">
+   <link rel="stylesheet" href="/css/commonlogin.css">
 </head>
 <body>
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="/pages/header.jsp"></jsp:include>
 <div><h4>Compare Companies</h4></div>
 <div><label>Choose a Sector:</label></div>
 <div class="dropdown">

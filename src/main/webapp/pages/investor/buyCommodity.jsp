@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+       <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,27 +13,20 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-   <link rel="stylesheet" href="css/common.css">
+   <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="/pages/header.jsp"></jsp:include>
 <h3>Buy Commodity</h3>
-<form action="" method="get">
-<div class="floatright">
-    
-      <input type="text" placeholder="Search Commodities.." name="search">
-      <button type="submit">Search</button>
-  </div>
-  <br>
-</form>
-<form action="orderConfirmation.jsp" method=post class="login-form">
+<form:form action="/investor/orderConfirmationBuyCommodity" modelAttribute="commodity"  method="post" class="login-form">
 <table class="fontwhite">
-<tr><th>Commodity Name: </th><td>Crude Oil</td></tr>
-<tr><th>Current Price: </th><td>1500</td></tr>
-<tr><th>Quantity: </th><td><input type="number" name="quantity"></td></tr>
+<tr hidden="true"><th>Commodity Id: </th><td>${commodity.commodityCode }</td></tr>
+<tr><th>Commodity Name: </th><td>${commodity.commodityName }</td></tr>
+<tr><th>Current Price: </th><td>${commodity.currentPrice }</td></tr>
+<tr><th>Quantity: </th><td><input type="number" name="quantity" placeholder="Enter quantity" required="required"></td></tr>
 </table>
 <br>
 <div id="center" ><button class="btn btn-primary">Buy</button></div>
-</form>
+</form:form>
 </body>
 </html>

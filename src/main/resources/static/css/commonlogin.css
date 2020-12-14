@@ -103,3 +103,17 @@
     
     margin:auto;
     }
+
+.my-custom-scrollbar {
+	position: relative;
+	height: 250px;
+	overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+	display: block;
+}
+
+.tableFixHead          { overflow-y: auto; height: 100px; }
+.tableFixHead thead th { position: sticky; top: 0;border-top:none; border-bottom:none; background-color:#337a91;}
+

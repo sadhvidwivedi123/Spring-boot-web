@@ -22,7 +22,7 @@ public class InvestorEntity extends UserEntity{
 	@Column(name="is_new_user", nullable=false)
 	private Boolean isNewUser;
 	
-	@Column(name="pan",  nullable=false, unique=true)
+	@Column(name="pan", nullable=false, unique=true)
 	private String panId;
 	
 	@Column(name="current_portfolio_value")

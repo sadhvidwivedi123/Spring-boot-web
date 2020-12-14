@@ -3,6 +3,7 @@ package com.wellsfargo.batch5.pms.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.wellsfargo.batch5.pms.exception.PortfolioException;
 import com.wellsfargo.batch5.pms.model.InvestorRegisterModel;
@@ -21,7 +22,7 @@ public class HomeServiceImpl implements IHomeService{
 	
 	@Autowired
 	private UserRepo userRepo; 
-
+	@Transactional
 	@Override
 	public InvestorRegisterModel register(InvestorRegisterModel user) throws PortfolioException {
 		
@@ -53,8 +54,6 @@ public class HomeServiceImpl implements IHomeService{
 		}
 		return user;
 	}
-
-
 	@Override
 	public void login(UserModel user) throws PortfolioException {
 		// TODO Auto-generated method stub

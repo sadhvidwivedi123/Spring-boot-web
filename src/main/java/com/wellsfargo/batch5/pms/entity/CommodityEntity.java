@@ -10,6 +10,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name="commodities")
@@ -18,6 +19,7 @@ public class CommodityEntity {
 	@Id
 	@Column(name="commodity_code")
 	private Integer commodityCode;
+	
 	
 	@Column(name="commodity_name")
 	private String commodityName;
