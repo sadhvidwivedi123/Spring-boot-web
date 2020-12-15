@@ -32,6 +32,11 @@ public class InvestorStockDetailsEntity {
 	
 	@Column(name="date")
 	private LocalDate date;
+	
+	public InvestorStockDetailsEntity()
+	{
+		
+	}
 
 	public InvestorStockDetailsEntity(Integer investorStockId, InvestorEntity investor, StockEntity stock, Integer unit, LocalDate date) {
 		super();

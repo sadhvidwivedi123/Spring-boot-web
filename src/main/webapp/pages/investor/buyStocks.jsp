@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+           <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,30 +17,22 @@
 </head>
 <body>
 <jsp:include page="/pages/header.jsp"></jsp:include>
-<div id="center"><h3>Buy Stocks</h3></div>
-<form action="" method="get">
-<div class="floatright">
-    
-      <input type="text" placeholder="Search Stock.." name="search">
-      <button type="submit">Search</button>
-  </div>
-  <br>
-</form>
-<br>
-<h5>Company 1 Stock Details</h5>
-<div class="login-form">
-<form action="orderConfirmation.jsp" method="post">
+<div id="center"><h3>Buy ${stock.company.companyTitle} Stocks</h3></div>
+
+<c:if test="${insufficientAmount != null}">
+					<p style="color:red;font-size:15px;" class= "error" id="center">Insufficient Wallet Balance. Kindly add amount in Wallet to proceed!
+				</c:if>
+<form:form action="/investor/orderConfirmationBuyStock" modelAttribute="stock"  method="post" class="login-form">
 <table class="fontwhite">
-<tr><td><label><strong>Exchange: </strong></label></td><td><input type="radio" id="BSE" name="Exchange" value="BSE"><label>BSE</label><input type="radio" id="NSE" name="Exchange" value="NSE"><label>NSE</label></td></tr>
-<tr><td><label><strong>Stock Name: </strong></label></td><td><label>XYZ </label></td></tr>
-<tr><td><label><strong>Current Stock Price:   </strong></label></td><td><label>Rs. 1500 </label></td></tr>
-<tr><td><label><strong>Quantity:   </strong></label></td><td><input name="quantity" type="number"></input></td></tr>
-<tr><td><label><strong>Total Price:   </strong></label></td><td><label>Rs. 20000 </label></td></tr>
+<tr hidden="true"><th>Company Code: </th><td><input type="text" name="companyCode" value="${stock.company.companyCode }"/></td></tr>
+<tr hidden="true"><th>Stock Id: </th><td><input type="text" name="stockId" value="${stock.stockId }"/></td></tr>
+<tr><th>Exchange: </th><td><input type="radio" id="BSE" name="Exchange" value="${stock.stockExchange}"><label>BSE</label><input type="radio" id="NSE" name="Exchange" value="${stock.stockExchange}" required="required"><label>NSE</label></td></tr>
+<tr><th>Stock Id: </th><td><label>${stock.stockId }</label></td></tr>
+<tr><th>Current Stock Price:  </th><td><label>${stock.currentPrice}</label></td></tr>
+<tr><th>Quantity:  </th><td><input name="quantity" type="number" placeholder="Enter quantity" required="required"></input></td></tr>
 
 </table>
 <div id="center"><button class="btn btn-primary" type="submit">Buy</button></div>
-</form>
-</div>
-
+</form:form>
 </body>
 </html>

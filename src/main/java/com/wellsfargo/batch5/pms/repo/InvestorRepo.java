@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wellsfargo.batch5.pms.entity.InvestorEntity;
+import com.wellsfargo.batch5.pms.entity.PortfolioWalletEntity;
 
 @Repository
 public interface InvestorRepo extends JpaRepository<InvestorEntity, Integer>{

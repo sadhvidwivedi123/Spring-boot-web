@@ -18,9 +18,13 @@
 <body>
 <jsp:include page="/pages/header.jsp"></jsp:include>
 <h3>Buy Commodity</h3>
+
+<c:if test="${insufficientAmount != null}">
+					<p style="color:red;font-size:15px;" class= "error" id="center">Insufficient Wallet Balance. Kindly add amount in Wallet to proceed!
+				</c:if>
 <form:form action="/investor/orderConfirmationBuyCommodity" modelAttribute="commodity"  method="post" class="login-form">
 <table class="fontwhite">
-<tr hidden="true"><th>Commodity Id: </th><td>${commodity.commodityCode }</td></tr>
+<tr hidden="true"><th>Commodity Id: </th><td><input type="text" name="commodityCode" value="${commodity.commodityCode }"/></td></tr>
 <tr><th>Commodity Name: </th><td>${commodity.commodityName }</td></tr>
 <tr><th>Current Price: </th><td>${commodity.currentPrice }</td></tr>
 <tr><th>Quantity: </th><td><input type="number" name="quantity" placeholder="Enter quantity" required="required"></td></tr>

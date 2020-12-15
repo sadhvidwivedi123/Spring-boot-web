@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.wellsfargo.batch5.pms.entity.CommodityEntity;
 import com.wellsfargo.batch5.pms.entity.CompanyEntity;
 import com.wellsfargo.batch5.pms.entity.StockEntity;
 
@@ -17,6 +18,8 @@ import com.wellsfargo.batch5.pms.entity.StockEntity;
 public interface StockRepo extends JpaRepository<StockEntity, Integer>{
 	
 	StockEntity findByCompany(CompanyEntity company);
+	
+	StockEntity findByStockId(Integer stockId);
 	
 	@Transactional
 	@Modifying(clearAutomatically = true)

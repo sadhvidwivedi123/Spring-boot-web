@@ -18,14 +18,15 @@
 <body>
 <jsp:include page="/pages/header.jsp"></jsp:include>
 <h3>Please confirm transaction details</h3>
-<form:form action="/investor/sellCommodityConfirm" method="post" name="sellCommodityConfirm" modelAttribute="commodity">
+<form:form action="/investor/${buy?'buy':'sell'}${isStock?'Stock':'Commodity'}Confirm" method="post" name="sellCommodityConfirm" modelAttribute="${isStock?'stock':'commodity'}">
 <div class="login-form">
 <table class="fontwhite">
+<tr hidden="true"><th>Commodity Id: </th><td><input type="text" name="commodityCode" value="${commodity.commodityCode }"/></td></tr>
 <tr><td><label><strong>Order Type: </strong></label></td><td><label>${buy?"Buy":"Sell" }</label></td></tr>
-<tr><td><label><strong>${isStock?"Stock":"Commodity" } Name: </strong></label></td><td><input type="text" name="commodityName" readonly="readonly" value="${commodity.commodityName }"/></td></tr>
-<tr><td><label><strong>Current Price:   </strong></label></td><td><input type="text" name="currentPrice" readonly="readonly" value="${commodity.currentPrice }"/></td></tr>
+<tr><td><label><strong>${isStock?"Stock Id:":"Commodity Name:" }  </strong></label></td><td><input type="text" name="${isStock?'stockId':'commodityName'}" readonly="readonly" value="${isStock?stock.stockId:commodity.commodityName}"/>
+<tr><td><label><strong>Current Price:   </strong></label></td><td><input type="text" name="currentPrice" readonly="readonly" value="${isStock?stock.currentPrice:commodity.currentPrice}"/></td></tr>
 <tr><td><label><strong>Quantity:   </strong></label></td><td><input type="text" name="quantity" readonly="readonly" value="${quantity }"/></td></tr>
-<tr><td><label><strong>Total Price:   </strong></label></td><td><input type="text" name="totalPrice" readonly="readonly" value="${quantity*commodity.currentPrice }"/></td></tr>
+<tr><td><label><strong>Total Price:   </strong></label></td><td><input type="text" name="totalPrice" readonly="readonly" value="${isStock?quantity*stock.currentPrice:quantity*commodity.currentPrice}"/></td></tr>
 </table>
 <span><button type="button" class="btn btn-primary" onclick="javascript:history.back()">Back</button><button class="btn btn-primary" type="submit">Confirm</button></span>
 </div>

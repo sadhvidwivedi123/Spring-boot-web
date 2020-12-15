@@ -217,7 +217,8 @@ public class PortfolioParser {
 		target.setDate(source.getDate());
 		target.setInvestor(PortfolioParser.parse(source.getInvestor()));
 		target.setStock(PortfolioParser.parse(source.getStock()));
-		target.setUnit(source.getUnit());
+		target.setQuantity(source.getUnit());
+		target.setInvestorStockId(source.getInvestorStockId());
 		return target;
 	}
 	

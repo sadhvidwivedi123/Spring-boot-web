@@ -34,6 +34,9 @@ public class InvestorEntity extends UserEntity{
 	@Column(name="amount_earned")
 	private Double amountEarned;
 	
+	@Column(name="recent_companies")
+	private String recentCompanies;
+	
 	@Embedded
 	private PortfolioWalletEntity portWallet;
 	

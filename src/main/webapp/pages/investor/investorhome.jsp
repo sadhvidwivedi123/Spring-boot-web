@@ -62,14 +62,26 @@
  </div>
 <br><br><br>
 <div id="dashboard" class="showhide">
+<c:if test="${isCommodityBought!=null}">
+<p style="color:white;font-size:12px"> Commodity - ${boughtCommodity} with quantity:${boughtQuantity} bought!
+</c:if>
+<c:if test="${isCommoditySold!=null}">
+<p style="color:white;font-size:12px">Commodity - ${soldCommodity} with quantity:${soldQuantity} sold!
+</c:if>
+<c:if test="${isStockBought!=null}">
+<p style="color:white;font-size:12px">Stock - ${boughtStock} with quantity:${boughtQuantity} bought!
+</c:if>
+<c:if test="${isStockSold!=null}">
+<p style="color:white;font-size:12px">Stock - ${soldStock} with quantity:${soldQuantity} sold!
+</c:if>
 <h3>Dashboard</h3>
 
 <div id="center">
 <span><label><strong>Current Portfolio Value: </strong></label>${currentPortfolioValue} INR</span>
 <span>&nbsp;&nbsp;&nbsp;</span>
-<span><label><strong>Amount Invested as on date:</strong></label>5000 INR</span>
+<span><label><strong>Amount Invested as on date:</strong></label>${amountInvested} INR</span>
 <span>&nbsp;&nbsp;&nbsp;</span>
-<span><label><strong>Amount Earned as on date:</strong></label>300 INR</span>
+<span><label><strong>Amount Earned as on date:</strong></label>${amountEarned} INR</span>
 </div>
 
 
@@ -83,7 +95,7 @@
         <h4>Portfolio Wallet</h4>
         </div>
         <div class="modal-body">
-          <p>Your current wallet balance is: <strong>1500 INR</strong></p>
+          <p>Your current wallet balance is: <strong>${walletBalance} INR</strong></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -97,6 +109,14 @@
 </div>
 
 <div id="recentlyviewedcompany" style="display:none;" class="showhide">
+<form action="" class="floatright">
+<div class="search-container" id="center">
+ 
+      <input type="text" placeholder="Search Company.." name="search">
+      <span id="center" ><input type="submit" class="btn btn-primary" class="btn" value="Search"></span>
+    
+  </div>
+ </form>
 <h3>Recently Viewed Companies</h3>
 
 <ul class="ul-ns">
@@ -107,14 +127,7 @@
 
 </div>
 <div id="companies" class="showhide" style="display:none;">
-<form action="">
-<div class="search-container" id="center">
- 
-      <input type="text" placeholder="Search Company.." name="search">
-      <span id="center" ><input type="submit" class="btn btn-primary" class="btn" value="Search"></span>
-    
-  </div>
- </form>
+
 <ul class="ul-ns">
 <li><a class="link" href="compareCompany.jsp">Compare Companies</a></li>
 </ul>
@@ -123,32 +136,92 @@
 
 <div id="stocks" class="showhide" style="display:none;">
 <div id="center" style="margin:auto;">
-<form:form action="/backofficeuser/modifyCompany" method="post">
+
+
+
+<div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a class="link" data-toggle="collapse" href="#collapse1">Buy Stocks</a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse">
+        <div class="panel-body"></div>
+        
+        <form:form action="" method="post">
 <c:choose>
-				<c:when test="${company_list==null || company_list.isEmpty() }">
+				<c:when test="${stock_list==null || stock_list.isEmpty() }">
 					<div class="alert alert-info">
-						<p>No Companies added yet! Please contact Admin at SuperAdmin@pms.com
+						<p>No Stocks added yet! Please contact Admin at SuperAdmin@pms.com
 					</div>
 				</c:when>
 				<c:otherwise>
 <div class=" table-wrapper-scroll-y my-custom-scrollbar">
-<table class="table table-striped table-hover table-light customtable margin-auto tableFixHead" style="width:100%">
+<table class="table table-striped table-hover table-light customtable margin-auto tableFixHead">
 <thead>
-<tr><th>Select</th><th>Company Code</th><th>Company Title</th><th>Operations</th><th>Share Count</th><th>Open Share Price(USD)</th><th>Sector</th><th>Currency</th><th>Turn Over</th></tr>
+<tr><th>Select</th><th>Stock Code</th><th>Company Name</th><th>Stock Exchange</th><th>Current Price</th></tr>
 </thead>
 <tbody>
-<c:forEach var="cl" items="${company_list}">
-<tr><td><input type="radio" id="${cl.companyCode}" name="company" value="${cl.companyCode}">&nbsp;</td><td>${cl.companyCode}</td><td>${cl.companyTitle}</td><td>${cl.operations}</td><td>${cl.shareCount}</td><td>${cl.openSharePrice}</td><td>${cl.sector}</td><td>${cl.currency}</td><td>${cl.turnOver}</td></tr>
+<c:forEach var="sl" items="${stock_list}">
+<tr><td><input type="radio" id="${sl.company.companyCode}" name="stock" value="${sl.company.companyCode}" required="required">&nbsp;</td><td>${sl.stockId}</td><td>${sl.company.companyTitle}</td><td>${sl.stockExchange}</td><td>${sl.currentPrice}</td></tr>
 </c:forEach>
 </tbody>
 </table>
 </div>
-<br>
-<span id="center"><input type="submit" class="btn btn-primary" class="btn" value="Buy Stocks"></span>
-<span id="center"><input type="submit" class="btn btn-primary" class="btn" value="Sell Stocks"></span>
+<div id="center"><input type="submit" class="btn btn-primary" class="btn" value="Buy Stock" formaction="/investor/buyStocks"></div>
 </c:otherwise>
 </c:choose>
 </form:form>
+        <div class="panel-footer"></div>
+      </div>
+    </div>
+</div>
+<br>
+
+
+
+<div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a class="link" data-toggle="collapse" href="#collapse2">Sell Stocks</a>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body"></div>
+ <form:form action="/investor/orderConfirmationSellStock" method="post" modelAttribute="stock">
+<c:choose>
+				<c:when test="${inv_stock_list==null || inv_stock_list.isEmpty() }">
+					<div class="alert alert-info">
+						<p>No Stocks purchased yet!.
+					</div>
+				</c:when>
+				<c:otherwise>
+<div class=" table-wrapper-scroll-y my-custom-scrollbar">
+<table class="table table-striped table-hover table-light customtable margin-auto tableFixHead">
+<thead>
+<tr><th>Select</th><th>Stock Code</th><th>Company Name</th><th>Current Price</th><th>Available Qty</th><th>Sell Qty</th></tr>
+</thead>
+<tbody>
+<c:forEach var="sl" items="${inv_stock_list}">
+<tr><td><input type="radio" id="${sl.stock.company.companyCode}" name="companyCode" value="${sl.stock.company.companyCode}" required="required">&nbsp;</td><td>${sl.stock.stockId}</td><td>${sl.stock.company.companyTitle}</td><td>${sl.stock.currentPrice}</td><td>${sl.quantity}</td><td><input type="number" class="${sl.stock.company.companyCode} disabledtext" name="quantity" min="1" max="${sl.quantity}" disabled="disabled" required="required"></td></tr>
+</c:forEach>
+</tbody>
+</table>
+</div>
+<div id="center"><input type="submit" class="btn btn-primary" class="btn" value="Sell Stock"></div>
+</c:otherwise>
+</c:choose>
+</form:form>
+        <div class="panel-footer"></div>
+      </div>
+    </div>
+</div>
+
+
+
+
 </div>
 </div>
 <div id="commodities" class="showhide" style="display:none;">
