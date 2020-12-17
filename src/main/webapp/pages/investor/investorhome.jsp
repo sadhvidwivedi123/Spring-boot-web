@@ -14,6 +14,9 @@
   <script src="/js/radioselect.js"></script>
     <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+<script src="YourJquery source path"></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/common.css">
   <link rel="stylesheet" href="/css/commonlogin.css">
@@ -28,10 +31,11 @@
 <form action="" method="post">
 <div>
 <select name="investorCurrency" id="investorCurrency">
-  <option value="INR">INR</option>
+  <option value="INR"><a href="/">INR</a></option>
   <option value="USD">USD</option>
   <option value="CAD">CAD</option>
   <option value="EUR">EUR</option>
+  <option value="EUR">USD</option>
 </select>
 <input type="submit" class="modify-btn" class="btn"></div>
 </form>
@@ -74,6 +78,10 @@
 <c:if test="${isStockSold!=null}">
 <p style="color:white;font-size:12px">Stock - ${soldStock} with quantity:${soldQuantity} sold!
 </c:if>
+<c:if test="${payment==true}">
+<p style="color:white;font-size:12px">Amount - ${amount} added successfully to Portfolio Wallet!
+</c:if>
+
 <h3>Dashboard</h3>
 
 <div id="center">
@@ -109,29 +117,61 @@
 </div>
 
 <div id="recentlyviewedcompany" style="display:none;" class="showhide">
-<form action="" class="floatright">
+<form action="/investor/getCompanyList" class="floatright">
 <div class="search-container" id="center">
  
-      <input type="text" placeholder="Search Company.." name="search">
+      <input type="text" name="companyText" id="searchCompany" placeholder="Search Company.." name="search">
       <span id="center" ><input type="submit" class="btn btn-primary" class="btn" value="Search"></span>
     
   </div>
  </form>
 <h3>Recently Viewed Companies</h3>
-
+<c:choose>
+<c:when test="${recent_company_list!=null}">
+<div class=" table-wrapper-scroll-y my-custom-scrollbar">
 <ul class="ul-ns">
-<li><a class="link" href="companyProfile.jsp">Company1</a></li>
-<li><a class="link" href="companyProfile.jsp">Company2</a></li>
-<li><a class="link" href="companyProfile.jsp">Company3</a></li>
+<c:forEach var="cl" items="${recent_company_list}">
+<li><a class="link" href="companyProfile?companyCode=${cl.companyCode }">${cl.companyTitle }</a></li>
+</c:forEach>
 </ul>
+</div>
+				</c:when>
+</c:choose>
+
+
 
 </div>
 <div id="companies" class="showhide" style="display:none;">
 
+<c:choose>
+				<c:when test="${company_list==null || company_list.isEmpty() }">
+					<div class="alert alert-info">
+						<p>No Companies added yet! Please contact Admin at SuperAdmin@pms.com
+					</div>
+				</c:when>
+				<c:otherwise>
+<h3>Company List</h3>
+<div class=" table-wrapper-scroll-y my-custom-scrollbar">
+
+<table class="table table-striped table-hover table-light customtable margin-auto tableFixHead">
+<thead>
+<tr><th>Company Code</th><th>Company Name</th><th>Operations:</th><th>Sector:</th></tr>
+</thead>
+<tbody>
+<c:forEach var="cl" items="${company_list}">
+<tr><td>${cl.companyCode}</td><td><a href="/investor/companyProfile?companyCode=${cl.companyCode }">${cl.companyTitle}</a></td><td>${cl.operations}</td><td>${cl.sector}</td><td><input hidden="true" type="text" name="companyCode" value="${cl.companyCode}" readonly="readonly"/></td></tr>
+</c:forEach>
+</tbody>
+</table>
+</div>
+<br><br>
+<div id="center" >
 <ul class="ul-ns">
-<li><a class="link" href="compareCompany.jsp">Compare Companies</a></li>
+<li><a  class="link" href="/investor/compareCompany">Compare Companies</a></li>
 </ul>
-<br>
+</div>
+</c:otherwise>
+</c:choose>
 </div>
 
 <div id="stocks" class="showhide" style="display:none;">
@@ -317,17 +357,39 @@
 <img src="" alt="chart">
 </div>
 <hr>
+<a href="/investor/addMoney" >Add Money to Wallet</a>
 <h3>Get Portfolio Report</h3>
+<form action="/investor/generatePortfolioReport">
 <ul class="ul-ns" id="center">
-<li><input type="radio" name="report" id="monthly"><label for="monthly">Monthly</label>
-<input type="radio" name="report" id="annual" ><label for="annual">Annual</label>
-<input type="radio" name="report" id="dateRange"><label for="dateRange">Date Range</label>
+<li><input type="radio" name="report" onclick="document.getElementById('dateShow').style.display='none';document.getElementById('monthShow').style.display='block';" id="monthly" value="monthly" required><label for="monthly">Monthly(Current Year)</label>
+<input type="radio" name="report" onclick="document.getElementById('dateShow').style.display='none';document.getElementById('monthShow').style.display='none';" id="annual" value="annual" required><label for="annual">Annual(Current Year)</label>
+<input type="radio" name="report" onclick="document.getElementById('dateShow').style.display='block';document.getElementById('monthShow').style.display='none';" id="dateRange" value="dateRange" required><label for="dateRange">Date Range</label>
 </li>
-<li><label for="dateRange">From: </label><input type="date" name="report" id="from">
-<label for="dateRange">To: </label><input type="date" name="report" id="to">
+<li><div id="dateShow" style="display:none;"><label for="dateRange">From: </label><input type="date" name="fromDate" id="from">
+<label for="dateRange">To: </label><input type="date" name="toDate" id="to">
+</div>
+<div id="monthShow" style="display:none;">
+<select name="month" >
+  <option value="January">January</option>
+  <option value="February">February</option>
+  <option value="March">March</option>
+  <option value="April">April</option>
+  <option value="May">May</option>
+  <option value="June">June</option>
+  <option value="July">July</option>
+  <option value="August">August</option>
+  <option value="September">September</option>
+  <option value="October">October</option>
+  <option value="November">November</option>
+  <option value="December">December</option>
+  
+</select>
+</div>
 <div id="center"><input type="submit" class="btn btn-primary" class="btn" value="Generate Report"></div></li>
 </ul>
+</form>
 </div>
+
    <script src="/js/investorhome.js"></script>
 </body>
 </html>

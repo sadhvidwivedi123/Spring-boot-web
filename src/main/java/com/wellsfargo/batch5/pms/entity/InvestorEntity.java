@@ -101,6 +101,14 @@ public class InvestorEntity extends UserEntity{
 		this.amountEarned = amountEarned;
 	}
 
+	public String getRecentCompanies() {
+		return recentCompanies;
+	}
+
+	public void setRecentCompanies(String recentCompanies) {
+		this.recentCompanies = recentCompanies;
+	}
+
 	
 
 }

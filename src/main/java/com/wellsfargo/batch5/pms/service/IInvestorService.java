@@ -1,10 +1,11 @@
 package com.wellsfargo.batch5.pms.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.wellsfargo.batch5.pms.entity.PortfolioWalletEntity;
 import com.wellsfargo.batch5.pms.exception.PortfolioException;
-
+import com.wellsfargo.batch5.pms.model.CompanyModel;
 import com.wellsfargo.batch5.pms.model.InvestorCommodityDetailsModel;
 import com.wellsfargo.batch5.pms.model.InvestorStockDetailsModel;
 
@@ -35,6 +36,23 @@ public interface IInvestorService {
 	public boolean hasSufficientWalletBalance(String userName, Double transactionAmount);
 
 	public List getCompanyListBasedOnText(String companyText);
+
+	public CompanyModel getCompanyDetails(Integer companyId);
+
+	public void updateRecentCompanies(Integer companyCode, String userName);
+
+	public List<CompanyModel> getRecentCompanies(String name);
+
+	public List<String> getSector();
+
+	public List<CompanyModel> getCompanyBySector(String sector);
+
+	public List<CompanyModel> getSelectedCompaniesByCode(String companySelected);
+
+	public void addMoneytoWallet(String name, Double amount);
+
+	public void getPortfolioReport(String report, LocalDate fromDate, LocalDate toDate, String month);
+	
 	
 	
 	

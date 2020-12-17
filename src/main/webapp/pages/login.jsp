@@ -29,7 +29,7 @@
 <div class="form-group">
 <input type="hidden" name="${_csrf.parameterName}"	
 						value="${_csrf.token}" />
-<label>UserName</label><input name="userName" type="text" class="form-control" placeholder="Enter username" autocomplete="off" required>
+<label>UserName</label><input name="userName" type="text" class="form-control" placeholder="Enter username" autocomplete="off" pattern=".{5,}" required>
 </div>
  <div class="form-group">
 <label>Password</label><input name="password" type="password" class="form-control" placeholder="Enter password" required>

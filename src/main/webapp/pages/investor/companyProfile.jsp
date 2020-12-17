@@ -18,14 +18,14 @@
 <jsp:include page="/pages/header.jsp"></jsp:include>
 <div><h4><strong>Company Details</strong></h4></div>
 <br>
-<table class="table table-striped table-hover table-light customtable"><tr><td><strong>Company Code: </strong></td><td>1</td></tr>
-<tr><td><strong>Company Title: </strong></td><td>Company1</td></tr>
-<tr><td><strong>Operations: </strong></td><td>EMEA</td></tr>
-<tr><td><strong>Share Count: </strong></td><td>1200</td></tr>
-<tr><td><strong>Open Share Price(USD): </strong></td><td>1500</td></tr>
-<tr><td><strong>Sector:</strong> </td><td>Manufacturing</td></tr>
-<tr><td><strong>Currency: </strong></td><td>EUR</td></tr>
-<tr><td><strong>Turn Over: </strong></td><td>1223244</td></tr>
+<table class="table table-striped table-hover table-light customtable"><tr><td><strong>Company Code: </strong></td><td>${company.companyCode }</td></tr>
+<tr><td><strong>Company Title: </strong></td><td>${company.companyTitle }</td></tr>
+<tr><td><strong>Operations: </strong></td><td>${company.operations }</td></tr>
+<tr><td><strong>Share Count: </strong></td><td>${company.shareCount }</td></tr>
+<tr><td><strong>Open Share Price(USD): </strong></td><td>${company.openSharePrice }</td></tr>
+<tr><td><strong>Sector:</strong> </td><td>${company.sector }</td></tr>
+<tr><td><strong>Currency: </strong></td><td>${company.currency }</td></tr>
+<tr><td><strong>Turn Over: </strong></td><td>${company.turnOver }</td></tr>
 </table>
 <button onclick="location.href='buyStocks.jsp'" class="btn btn-primary" class="btn">Buy Stocks</button>
 <button onclick="location.href='sellStocks.jsp'" class="btn btn-primary" class="btn">Sell Stocks</button>
