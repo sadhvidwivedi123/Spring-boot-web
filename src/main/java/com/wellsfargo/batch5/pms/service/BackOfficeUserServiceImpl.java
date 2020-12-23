@@ -1,5 +1,8 @@
 package com.wellsfargo.batch5.pms.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +18,8 @@ import com.wellsfargo.batch5.pms.model.CommisionModel;
 import com.wellsfargo.batch5.pms.model.CommodityModel;
 import com.wellsfargo.batch5.pms.model.CompanyModel;
 import com.wellsfargo.batch5.pms.model.StockModel;
+import com.wellsfargo.batch5.pms.model.TransactionModel;
+import com.wellsfargo.batch5.pms.repo.CommisionRepo;
 import com.wellsfargo.batch5.pms.repo.CommodityRepo;
 import com.wellsfargo.batch5.pms.repo.CompanyRepo;
 import com.wellsfargo.batch5.pms.repo.StockRepo;
@@ -29,6 +34,9 @@ public class BackOfficeUserServiceImpl implements IBackOfficeUserService{
 	
 	@Autowired
 	private CommodityRepo commodityRepo;
+	
+	@Autowired
+	private CommisionRepo commisionRepo;
 	
 	@Transactional
 	@Override
@@ -223,6 +231,88 @@ public class BackOfficeUserServiceImpl implements IBackOfficeUserService{
 	public CommodityModel getCommodityByCommodityName(String commodityName) throws PortfolioException {
 		// TODO Auto-generated method stub
 		return PortfolioParser.parse(commodityRepo.findByCommodityName(commodityName.toUpperCase()));
+	}
+
+	@Override
+	public List<CommisionModel> getCommissionReport(String report, LocalDate fdate, LocalDate tdate, String month) throws PortfolioException {
+		List<CommisionModel> te=new ArrayList<CommisionModel>();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		if(report.trim().toLowerCase().equals("annual"))
+		{
+			fdate=LocalDate.parse("2020-01-01",formatter);
+			tdate=LocalDate.now();
+		}
+		else if(report.trim().toLowerCase().equals("monthly"))
+		{
+			switch(month.trim().toLowerCase())
+			{
+			case "january":
+				fdate=LocalDate.parse("2020-01-01",formatter);
+				tdate=LocalDate.parse("2020-01-31",formatter);
+				break;
+				
+			case "february":
+				fdate=LocalDate.parse("2020-02-01",formatter);
+				tdate=LocalDate.parse("2020-02-28",formatter);
+				break;
+				
+			case "march":
+				fdate=LocalDate.parse("2020-03-01",formatter);
+				tdate=LocalDate.parse("2020-03-31",formatter);
+				break;
+				
+			case "april":
+				fdate=LocalDate.parse("2020-04-01",formatter);
+				tdate=LocalDate.parse("2020-04-30",formatter);
+				break;
+				
+			case "may":
+				fdate=LocalDate.parse("2020-05-01",formatter);
+				tdate=LocalDate.parse("2020-05-31",formatter);
+				break;
+				
+			case "june":
+				fdate=LocalDate.parse("2020-06-01",formatter);
+				tdate=LocalDate.parse("2020-06-30",formatter);
+				break;
+				
+			case "july":
+				fdate=LocalDate.parse("2020-07-01",formatter);
+				tdate=LocalDate.parse("2020-07-31",formatter);
+				break;
+				
+			case "august":
+				fdate=LocalDate.parse("2020-08-01",formatter);
+				tdate=LocalDate.parse("2020-08-31",formatter);
+				break;
+				
+			case "september":
+				fdate=LocalDate.parse("2020-09-01",formatter);
+				tdate=LocalDate.parse("2020-09-30",formatter);
+				break;
+				
+			case "october":
+				fdate=LocalDate.parse("2020-10-01",formatter);
+				tdate=LocalDate.parse("2020-10-31",formatter);
+				break;
+				
+			case "november":
+				fdate=LocalDate.parse("2020-11-01",formatter);
+				tdate=LocalDate.parse("2020-11-30",formatter);
+				break;
+				
+			case "december":
+				fdate=LocalDate.parse("2020-12-01",formatter);
+				tdate=LocalDate.parse("2020-12-31",formatter);
+				break;
+			default:
+				throw new PortfolioException("Error while generating Commision Report");
+			}
+		}
+		
+		te=commisionRepo.findAllByDateBetween(fdate,tdate).stream().map(e->PortfolioParser.parse(e)).collect(Collectors.toList());
+		
+		return te;
 	}
 
 }

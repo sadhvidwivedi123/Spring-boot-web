@@ -19,9 +19,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/commonlogin.css">
+  <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
-<jsp:include page="/pages/header.jsp"></jsp:include>
+<jsp:include page="/pages/header2.jsp"></jsp:include>
 <div class="form" class="container">
 <form:form action="/backofficeuser/createStock" method="post" class="was-validated" modelAttribute="stock">
 <div>

@@ -18,7 +18,8 @@
    
 </head>
 <body>
-<jsp:include page="header.jsp"></jsp:include>
+<h1>Portfolio Management System</h1>
+<hr>
 <div class="form" class="container">
 <form action="/validateLogin" method="post" class="was-validated">
 <div>
@@ -26,13 +27,16 @@
 <c:if test="${param.error != null}">
 					<p class= "error" id="center">Invalid Credentials! Access Denied!
 				</c:if>
+<c:if test="${registerSuccess==true}">
+<p style="color:green;font-size:12px;font-weight:bold"> Registration successful, Kindly Login to proceed!
+</c:if>
 <div class="form-group">
 <input type="hidden" name="${_csrf.parameterName}"	
 						value="${_csrf.token}" />
-<label>UserName</label><input name="userName" type="text" class="form-control" placeholder="Enter username" autocomplete="off" pattern=".{5,}" required>
+<label>UserName</label><input name="userName" type="text" class="form-control" placeholder="Enter username" autocomplete="off" pattern=".{6,}" required>
 </div>
  <div class="form-group">
-<label>Password</label><input name="password" type="password" class="form-control" placeholder="Enter password" required>
+<label>Password</label><input name="password" type="password" class="form-control" placeholder="Enter password" pattern=".{6,}" required>
 </div>
 <div id="center"><input type="submit" class="btn btn-primary" class="btn"></div>
 </div>

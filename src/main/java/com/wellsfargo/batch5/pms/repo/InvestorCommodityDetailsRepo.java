@@ -31,6 +31,8 @@ public interface InvestorCommodityDetailsRepo extends JpaRepository<InvestorComm
 	void update(@Param("quantity") Integer quantity,@Param("key") Integer key, @Param("date") LocalDate date);
 
 	InvestorCommodityDetailsEntity findByCommodity(CommodityEntity commodity);
+	InvestorCommodityDetailsEntity findByCommodityAndInvestor(CommodityEntity commodity,
+			InvestorEntity investor);
 
 
 }

@@ -20,25 +20,11 @@
 <h3>Please confirm transaction details</h3>
 <form:form action="/investor/addWalletConfirm" method="post" name="addMoney">
 <div class="login-form">
-<table class="fontwhite">
-<tr><td><label><strong>Amount   </strong></label></td><td><input type="text" name="amount" required="required"></td></tr>
-<tr><td><label><strong>Debit card</strong></label></td><td><input type="radio" value="debit" name="paymentMethod" onclick="displayDebitForm()" required="required"><br></td></tr>
-<tr><td><label><strong>Credit card</strong></label></td><td><input type="radio" value="debit" name="paymentMethod" onclick="displayDebitForm()" required="required"><br></td></tr>
-<tr id="cardNo" style="display:none;"><td><label><strong>Card No</strong></label></td><td><input type="text" name="cardno" required="required"></td></tr>
-<tr id="cardHolder" style="display:none;"><td><label><strong>Name on Card</strong></label></td><td><input type="text" name="name" required="required"></td></tr>
-<tr id="cvv" style="display:none;"><td><label><strong>CVV</strong></label></td><td><input type="text" name="name" required="required"></td></tr>
-<tr id="valid" style="display:none;"><td><label><strong>Valid Through</strong></label></td><td><input type="text" name="name" required="required"></td></tr>
+<table class="fontwhite" style="width:50%">
+<tr><td><label><strong>Amount</strong></label></td><td><input type="text" name="amount" required="required"/></td></tr>
 </table>
 <span><button class="btn btn-primary" type="submit">Confirm</button></span>
 </div>
 </form:form>
-<script type="text/javascript">
-function displayDebitForm(){
-document.getElementById('cardNo').style.display='block';
-document.getElementById('cardHolder').style.display='block';
-document.getElementById('cvv').style.display='block';
-document.getElementById('valid').style.display='block';
-}
-</script>
 </body>
 </html>

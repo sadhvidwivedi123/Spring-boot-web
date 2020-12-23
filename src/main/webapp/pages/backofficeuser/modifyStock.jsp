@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
-<jsp:include page="/pages/header.jsp"></jsp:include>
+<jsp:include page="/pages/header2.jsp"></jsp:include>
 <h3>Modify Selected Stock</h3>
 <div class="login-form">
 <form:form action="/backofficeuser/modifyStockAction" modelAttribute="stock" method="post">

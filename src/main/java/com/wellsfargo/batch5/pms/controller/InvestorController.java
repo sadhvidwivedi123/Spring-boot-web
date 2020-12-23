@@ -29,6 +29,7 @@ import com.wellsfargo.batch5.pms.model.CommodityModel;
 import com.wellsfargo.batch5.pms.model.CompanyModel;
 import com.wellsfargo.batch5.pms.model.InvestorModel;
 import com.wellsfargo.batch5.pms.model.StockModel;
+import com.wellsfargo.batch5.pms.model.TransactionModel;
 import com.wellsfargo.batch5.pms.repo.CompanyRepo;
 import com.wellsfargo.batch5.pms.repo.InvestorCommodityDetailsRepo;
 import com.wellsfargo.batch5.pms.service.IBackOfficeUserService;
@@ -349,6 +350,7 @@ public class InvestorController {
 		if(selectedCompanies!=null && selectedCompanies.size()>0)
 			mv.addObject("selectedCompanies", selectedCompanies);
 		mv.addObject("sectorList", sectorList);
+		
 		return mv;
 	}
 	
@@ -391,12 +393,25 @@ public class InvestorController {
 		
 	@GetMapping(value = "/generatePortfolioReport")
 	public ModelAndView generatePortfolioReport(@RequestParam("report") String report,@RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate,@RequestParam("month") String month) throws PortfolioException {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate fdate=null,tdate=null;
 		//formatter = formatter.withLocale( putAppropriateLocaleHere );  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH
-		LocalDate fdate = LocalDate.parse(fromDate, formatter);
-		LocalDate tdate = LocalDate.parse(toDate, formatter);
-		investorService.getPortfolioReport(report,fdate,tdate,month);
-		ModelAndView mv=new ModelAndView();
+		if(fromDate!=null&&fromDate.length()>5)
+		fdate = LocalDate.parse(fromDate, formatter);
+		if(toDate!=null&&fromDate.length()>5)
+		tdate = LocalDate.parse(toDate, formatter);
+		List<TransactionModel> listPortfolioReport=investorService.getPortfolioReport(auth.getName(),report,fdate,tdate,month);
+		ModelAndView mv=new ModelAndView("/investor/portfolioReport");
+		if(listPortfolioReport!=null || listPortfolioReport.size()>0)
+		mv.addObject("report", listPortfolioReport);
 		return mv;
 		}
+	@GetMapping(value = "/charts")
+	public ModelAndView generateCharts() {
+		ModelAndView mv=new ModelAndView("/investor/charts");
+		return mv;
+		
+		
+	}
 }

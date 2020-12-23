@@ -12,6 +12,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
    <link rel="stylesheet" href="/css/commonlogin.css">
+   <link rel="stylesheet" href="/css/common.css">
 
 </head>
 <body>
@@ -27,7 +28,5 @@
 <tr><td><strong>Currency: </strong></td><td>${company.currency }</td></tr>
 <tr><td><strong>Turn Over: </strong></td><td>${company.turnOver }</td></tr>
 </table>
-<button onclick="location.href='buyStocks.jsp'" class="btn btn-primary" class="btn">Buy Stocks</button>
-<button onclick="location.href='sellStocks.jsp'" class="btn btn-primary" class="btn">Sell Stocks</button>
 </body>
 </html>

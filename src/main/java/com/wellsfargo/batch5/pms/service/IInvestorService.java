@@ -8,6 +8,7 @@ import com.wellsfargo.batch5.pms.exception.PortfolioException;
 import com.wellsfargo.batch5.pms.model.CompanyModel;
 import com.wellsfargo.batch5.pms.model.InvestorCommodityDetailsModel;
 import com.wellsfargo.batch5.pms.model.InvestorStockDetailsModel;
+import com.wellsfargo.batch5.pms.model.TransactionModel;
 
 public interface IInvestorService {
 
@@ -51,7 +52,7 @@ public interface IInvestorService {
 
 	public void addMoneytoWallet(String name, Double amount);
 
-	public void getPortfolioReport(String report, LocalDate fromDate, LocalDate toDate, String month);
+	public List<TransactionModel> getPortfolioReport(String userName,String report, LocalDate fromDate, LocalDate toDate, String month)throws PortfolioException;
 	
 	
 	

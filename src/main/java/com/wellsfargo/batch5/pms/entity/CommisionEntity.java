@@ -26,6 +26,14 @@ public class CommisionEntity {
 		
 	}
 	
+	public Integer getCommisionId() {
+		return commisionId;
+	}
+
+	public void setCommisionId(Integer commisionId) {
+		this.commisionId = commisionId;
+	}
+
 	public CommisionEntity(Double commisionValue, LocalDate date) {
 		super();
 		this.commisionValue = commisionValue;

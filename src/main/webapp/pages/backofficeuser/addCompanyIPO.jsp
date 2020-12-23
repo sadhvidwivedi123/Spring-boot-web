@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
-<jsp:include page="/pages/header.jsp"></jsp:include>
+<jsp:include page="/pages/header2.jsp"></jsp:include>
 <div class="form" class="container">
 <form:form action="/backofficeuser/createCompanyIPO" method="post" class="was-validated" modelAttribute="company">
 <div>

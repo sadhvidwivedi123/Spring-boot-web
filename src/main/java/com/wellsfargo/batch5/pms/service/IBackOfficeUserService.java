@@ -1,5 +1,6 @@
 package com.wellsfargo.batch5.pms.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -39,5 +40,7 @@ public interface IBackOfficeUserService {
 	CompanyModel getCompanyByCompanyCode(Integer companyCode) throws PortfolioException;
 
 	CommodityModel getCommodityByCommodityName(String commodityName)throws PortfolioException;
+
+	List<CommisionModel> getCommissionReport(String report, LocalDate fdate, LocalDate tdate, String month)throws PortfolioException;
 
 }

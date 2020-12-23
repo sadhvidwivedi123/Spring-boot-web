@@ -19,7 +19,8 @@
 </head>
 <body>
 <div class="floatright"><input type="submit" class="btn btn-primary" class="btn" value="Logout"  onclick="location.href='/logout'"></div>
-<jsp:include page="/pages/header.jsp"></jsp:include>
+<h1>Portfolio Management System</h1>
+<hr>
 <div><h4>Welcome, ${auth.name}</h4></div>
 <div class="login-form" class="container">
 <form:form action="createBackOfficeUser" method="post" modelAttribute="bouser" class="was-validated">
@@ -27,6 +28,8 @@
 <c:if test="${user_name!=null}">
 					<p style="color:white;font-size:12px" id="center"> User ${user_name} created successfully!
 				</c:if>
+
+
 <div >
 <div class="form-group">
 <div><form:input path="userName" name="userName" type="text" title="Unique user name for login, having minimum 6 characters length" class="form-control" placeholder="User Name" required="required" /></div>

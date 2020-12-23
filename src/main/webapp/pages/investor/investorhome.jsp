@@ -23,31 +23,12 @@
 
 </head>
 <body>
-<div class="floatright"><input type="submit" class="btn btn-primary" class="btn" value="Logout"  onclick="location.href='/logout'"></div>
 <jsp:include page="/pages/header.jsp"></jsp:include>
 <div><h4>Welcome, ${auth.name}</h4></div>
-<div class="floatright">
-<label>Choose a currency:</label>
-<form action="" method="post">
-<div>
-<select name="investorCurrency" id="investorCurrency">
-  <option value="INR"><a href="/">INR</a></option>
-  <option value="USD">USD</option>
-  <option value="CAD">CAD</option>
-  <option value="EUR">EUR</option>
-  <option value="EUR">USD</option>
-</select>
-<input type="submit" class="modify-btn" class="btn"></div>
-</form>
-</div>
-
 <div class="container" style="position:absolute;">
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item">
       <a class="nav-link active" id="dashboardlink" data-toggle="tab" href="#dashboard.display:block">Dashboard</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="recentcomlink" data-toggle="tab" href="#dashboard.display:block">Recent Companies</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" id="companieslink" data-toggle="tab" href="#dashboard.display:block">Companies</a>
@@ -67,19 +48,20 @@
 <br><br><br>
 <div id="dashboard" class="showhide">
 <c:if test="${isCommodityBought!=null}">
-<p style="color:white;font-size:12px"> Commodity - ${boughtCommodity} with quantity:${boughtQuantity} bought!
+<p style="color:green;font-size:12px;font-weight:bold"> Commodity - ${boughtCommodity} with quantity:${boughtQuantity} bought!
 </c:if>
 <c:if test="${isCommoditySold!=null}">
-<p style="color:white;font-size:12px">Commodity - ${soldCommodity} with quantity:${soldQuantity} sold!
+<p style="color:green;font-size:12px;font-weight:bold">Commodity - ${soldCommodity} with quantity:${soldQuantity} sold!
 </c:if>
 <c:if test="${isStockBought!=null}">
-<p style="color:white;font-size:12px">Stock - ${boughtStock} with quantity:${boughtQuantity} bought!
+<p style="color:green;font-size:12px;font-weight:bold">Stock - ${boughtStock} with quantity:${boughtQuantity} bought!
 </c:if>
 <c:if test="${isStockSold!=null}">
-<p style="color:white;font-size:12px">Stock - ${soldStock} with quantity:${soldQuantity} sold!
+<p style="color:green;font-size:12px;font-weight:bold">Stock - ${soldStock} with quantity:${soldQuantity} sold!
 </c:if>
 <c:if test="${payment==true}">
-<p style="color:white;font-size:12px">Amount - ${amount} added successfully to Portfolio Wallet!
+<p style="color:green;font-size:12px;font-weight:bold" >Amount: ${amount} INR added successfully to your Portfolio Wallet! 
+<p style="color:green;font-size:12px;font-weight:bold" >Total Wallet Balance is: ${walletBalance} INR
 </c:if>
 
 <h3>Dashboard</h3>
@@ -113,19 +95,8 @@
     </div>
   </div>
   </div>
-   
-</div>
-
-<div id="recentlyviewedcompany" style="display:none;" class="showhide">
-<form action="/investor/getCompanyList" class="floatright">
-<div class="search-container" id="center">
- 
-      <input type="text" name="companyText" id="searchCompany" placeholder="Search Company.." name="search">
-      <span id="center" ><input type="submit" class="btn btn-primary" class="btn" value="Search"></span>
-    
-  </div>
- </form>
-<h3>Recently Viewed Companies</h3>
+ <hr>
+<h5 style="font-weight:bold;float:left">Recently Viewed Companies:</h5>
 <c:choose>
 <c:when test="${recent_company_list!=null}">
 <div class=" table-wrapper-scroll-y my-custom-scrollbar">
@@ -137,9 +108,8 @@
 </div>
 				</c:when>
 </c:choose>
-
-
-
+  
+   
 </div>
 <div id="companies" class="showhide" style="display:none;">
 
@@ -175,6 +145,17 @@
 </div>
 
 <div id="stocks" class="showhide" style="display:none;">
+
+<div style="position:absolute;left:300">
+<form action="/investor/getCompanyList">
+<div class="search-container" id="center" >
+ 
+      <input type="text" name="companyText" id="searchCompany" placeholder="Search Company.." name="search">
+      <span id="center" ><input type="submit" class="btn btn-primary" class="btn" value="Search"></span>
+    
+  </div>
+ </form>
+ </div>
 <div id="center" style="margin:auto;">
 
 
@@ -357,7 +338,7 @@
 <img src="" alt="chart">
 </div>
 <hr>
-<a href="/investor/addMoney" >Add Money to Wallet</a>
+<a class="link" href="/investor/addMoney" >Add Money to Wallet</a>
 <h3>Get Portfolio Report</h3>
 <form action="/investor/generatePortfolioReport">
 <ul class="ul-ns" id="center">

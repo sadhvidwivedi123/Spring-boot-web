@@ -28,7 +28,7 @@
 <tr><td><label><strong>Quantity:   </strong></label></td><td><input type="text" name="quantity" readonly="readonly" value="${quantity }"/></td></tr>
 <tr><td><label><strong>Total Price:   </strong></label></td><td><input type="text" name="totalPrice" readonly="readonly" value="${isStock?quantity*stock.currentPrice:quantity*commodity.currentPrice}"/></td></tr>
 </table>
-<span><button type="button" class="btn btn-primary" onclick="javascript:history.back()">Back</button><button class="btn btn-primary" type="submit">Confirm</button></span>
+<span><button class="btn btn-primary" type="submit">Confirm</button></span>
 </div>
 </form:form>
 </body>

@@ -1,6 +1,7 @@
 package com.wellsfargo.batch5.pms.service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,11 +23,14 @@ import com.wellsfargo.batch5.pms.entity.UserEntity;
 import com.wellsfargo.batch5.pms.exception.PortfolioException;
 import com.wellsfargo.batch5.pms.model.CommisionModel;
 import com.wellsfargo.batch5.pms.model.CompanyModel;
+import com.wellsfargo.batch5.pms.model.InvestorAmountEarnedModel;
 import com.wellsfargo.batch5.pms.model.InvestorCommodityDetailsModel;
 import com.wellsfargo.batch5.pms.model.InvestorStockDetailsModel;
+import com.wellsfargo.batch5.pms.model.TransactionModel;
 import com.wellsfargo.batch5.pms.repo.CommisionRepo;
 import com.wellsfargo.batch5.pms.repo.CommodityRepo;
 import com.wellsfargo.batch5.pms.repo.CompanyRepo;
+import com.wellsfargo.batch5.pms.repo.InvestorAmountEarnedRepo;
 import com.wellsfargo.batch5.pms.repo.InvestorCommodityDetailsRepo;
 import com.wellsfargo.batch5.pms.repo.InvestorRepo;
 import com.wellsfargo.batch5.pms.repo.InvestorStockDetailsRepo;
@@ -64,6 +68,9 @@ public class InvestorServiceImpl implements IInvestorService{
 	
 	@Autowired
 	private CompanyRepo companyRepo;
+	
+	@Autowired
+	private InvestorAmountEarnedRepo investorAmountEarnedRepo;
 
 	@Override
 	public Double getCurrentPortfolioValue(String userName) throws PortfolioException {
@@ -71,7 +78,7 @@ public class InvestorServiceImpl implements IInvestorService{
 		Integer userId=userRepo.findByUserName(userName).getUserId();
 		Double currentPortfolioValue=0.0;
 		
-		if(investorCommodityDetailsRepo.existsByInvestor(investorRepo.findById(userId).get()))
+		if(investorCommodityDetailsRepo.existsByInvestor(investorRepo.findById(userId).get())||investorStockDetailsRepo.existsByInvestor(investorRepo.findById(userId).get()))
 		{
 			
 			List<InvestorCommodityDetailsModel> investorCommodityDetails=investorCommodityDetailsRepo.findAllByInvestor(investorRepo.findById(userId).get()).stream().map(e->PortfolioParser.parse(e)).collect(Collectors.toList());
@@ -168,7 +175,7 @@ public class InvestorServiceImpl implements IInvestorService{
 		CommisionEntity cm=new CommisionEntity(pw.getWalletBalance()*2/100, LocalDate.now());
 		commissionRepo.save(cm);
 		//comkmodity table update 
-		InvestorCommodityDetailsEntity invComDetails= investorCommodityDetailsRepo.findByCommodity(commodityRepo.findByCommodityName(commodityName));
+		InvestorCommodityDetailsEntity invComDetails= investorCommodityDetailsRepo.findByCommodityAndInvestor(commodityRepo.findByCommodityName(commodityName), investorRepo.findById(userRepo.findByUserName(userName).getUserId()).get());
 		if(invComDetails.getUnit()-quantity==0){
 		investorCommodityDetailsRepo.deleteById(invComDetails.getInvestorCommKey());	
 		}
@@ -202,9 +209,9 @@ public class InvestorServiceImpl implements IInvestorService{
 		
 		//commodity table update
 		try {
-			if(investorCommodityDetailsRepo.existsByCommodity(commodityRepo.findByCommodityName(commodityName)))
+			if(investorCommodityDetailsRepo.existsByCommodity(commodityRepo.findByCommodityName(commodityName))&&investorCommodityDetailsRepo.existsByInvestor(investor))
 			{
-			InvestorCommodityDetailsEntity invComDetails= investorCommodityDetailsRepo.findByCommodity(commodityRepo.findByCommodityName(commodityName));
+			InvestorCommodityDetailsEntity invComDetails= investorCommodityDetailsRepo.findByCommodityAndInvestor(commodityRepo.findByCommodityName(commodityName),investor);
 			//invComDetails.setUnit(invComDetails.getUnit()-quantity);
 			Integer key= invComDetails.getInvestorCommKey();
 			quantity= invComDetails.getUnit()+quantity;
@@ -244,7 +251,7 @@ public class InvestorServiceImpl implements IInvestorService{
 		try {
 			if(investorStockDetailsRepo.existsByStock(stockRepo.findByStockId(Integer.parseInt(stockId))))
 			{
-			InvestorStockDetailsEntity invStockDetails= investorStockDetailsRepo.findByStock(stockRepo.findByStockId(Integer.parseInt(stockId)));
+			InvestorStockDetailsEntity invStockDetails= investorStockDetailsRepo.findByStockAndInvestor(stockRepo.findByStockId(Integer.parseInt(stockId)), investorRepo.findById(userRepo.findByUserName(userName).getUserId()).get());
 			//invComDetails.setUnit(invComDetails.getUnit()-quantity);
 			Integer key= invStockDetails.getInvestorStockId();
 			if(invStockDetails.getUnit()-quantity==0){
@@ -288,9 +295,9 @@ public class InvestorServiceImpl implements IInvestorService{
 				
 				//commodity table update
 				try {
-					if(investorStockDetailsRepo.existsByStock(stockRepo.findByStockId(stockId)))
+					if(investorStockDetailsRepo.existsByStock(stockRepo.findByStockId(stockId))&&investorStockDetailsRepo.existsByInvestor(investor))
 					{
-					InvestorStockDetailsEntity invStockDetails= investorStockDetailsRepo.findByStock(stockRepo.findByStockId(stockId));
+					InvestorStockDetailsEntity invStockDetails= investorStockDetailsRepo.findByStockAndInvestor(stockRepo.findByStockId(stockId),investor);
 					//invComDetails.setUnit(invComDetails.getUnit()-quantity);
 					Integer key= invStockDetails.getInvestorStockId();
 					quantity= invStockDetails.getUnit()+quantity;
@@ -335,7 +342,7 @@ public class InvestorServiceImpl implements IInvestorService{
 		}
 		else
 		{
-			if(!investor.getRecentCompanies().contains(companyCodeStr))
+			if(!(investor.getRecentCompanies().contains(companyCodeStr+",")&&investor.getRecentCompanies().contains(","+companyCodeStr)))
 			if(investor.getRecentCompanies().split(",").length>=5) //if it has 3 recent companies
 			{
 			temp=investor.getRecentCompanies()+","+companyCodeStr;
@@ -406,16 +413,110 @@ public class InvestorServiceImpl implements IInvestorService{
 	}
 
 	@Override
-	public void getPortfolioReport(String report, LocalDate fromDate, LocalDate toDate, String month) {
+	public List<TransactionModel> getPortfolioReport(String userName,String report, LocalDate fromDate, LocalDate toDate, String month) throws PortfolioException {
 		// TODO Auto-generated method stub
 		
-		//List<TransactionModel> te=new ArrayList<TransactionModel>();
+		List<TransactionModel> te=new ArrayList<TransactionModel>();
+		List<TransactionModel> te1=new ArrayList<TransactionModel>();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		if(report.trim().toLowerCase().equals("annual"))
+		{
+			fromDate=LocalDate.parse("2020-01-01",formatter);
+			toDate=LocalDate.now();
+		}
+		else if(report.trim().toLowerCase().equals("monthly"))
+		{
+			switch(month.trim().toLowerCase())
+			{
+			case "january":
+				fromDate=LocalDate.parse("2020-01-01",formatter);
+				toDate=LocalDate.parse("2020-01-31",formatter);
+				break;
 				
-			//	te=transactionRepo.findAllByDateBetween(fromDate,toDate).stream().map(e->PortfolioParser.parse(e)).collect(Collectors.toList());
+			case "february":
+				fromDate=LocalDate.parse("2020-02-01",formatter);
+				toDate=LocalDate.parse("2020-02-28",formatter);
+				break;
+				
+			case "march":
+				fromDate=LocalDate.parse("2020-03-01",formatter);
+				toDate=LocalDate.parse("2020-03-31",formatter);
+				break;
+				
+			case "april":
+				fromDate=LocalDate.parse("2020-04-01",formatter);
+				toDate=LocalDate.parse("2020-04-30",formatter);
+				break;
+				
+			case "may":
+				fromDate=LocalDate.parse("2020-05-01",formatter);
+				toDate=LocalDate.parse("2020-05-31",formatter);
+				break;
+				
+			case "june":
+				fromDate=LocalDate.parse("2020-06-01",formatter);
+				toDate=LocalDate.parse("2020-06-30",formatter);
+				break;
+				
+			case "july":
+				fromDate=LocalDate.parse("2020-07-01",formatter);
+				toDate=LocalDate.parse("2020-07-31",formatter);
+				break;
+				
+			case "august":
+				fromDate=LocalDate.parse("2020-08-01",formatter);
+				toDate=LocalDate.parse("2020-08-31",formatter);
+				break;
+				
+			case "september":
+				fromDate=LocalDate.parse("2020-09-01",formatter);
+				toDate=LocalDate.parse("2020-09-30",formatter);
+				break;
+				
+			case "october":
+				fromDate=LocalDate.parse("2020-10-01",formatter);
+				toDate=LocalDate.parse("2020-10-31",formatter);
+				break;
+				
+			case "november":
+				fromDate=LocalDate.parse("2020-11-01",formatter);
+				toDate=LocalDate.parse("2020-11-30",formatter);
+				break;
+				
+			case "december":
+				fromDate=LocalDate.parse("2020-12-01",formatter);
+				toDate=LocalDate.parse("2020-12-31",formatter);
+				break;
+			default:
+				throw new PortfolioException("Error while generating portfolio Report");
+			}
+		}
 		
+		te=transactionRepo.findAllByDateBetween(fromDate,toDate).stream().map(e->PortfolioParser.parse(e)).collect(Collectors.toList());
+		for(TransactionModel t: te)
+		{
+			if(t.getUserId()==userRepo.findByUserName(userName).getUserId()) {
+				te1.add(t);
+			}
+		}
+		return te1;
 	}
 	
-	
+	public List<InvestorAmountEarnedModel> getAmountEarnedforlast10Weeks(String userName)
+	{
+		List<InvestorAmountEarnedModel> list=new ArrayList<InvestorAmountEarnedModel>();
+		InvestorAmountEarnedModel m=new InvestorAmountEarnedModel();
+		LocalDate from=null,to=null;
+		for(int i=0;i<10;i++)
+		{
+		to=LocalDate.now();
+		from=to.minusDays(7);
+		
+		//m.setAmountEarned(investorAmountEarnedRepo.fin);
+		
+		}
+		return list;
+	}
 	
 
 }

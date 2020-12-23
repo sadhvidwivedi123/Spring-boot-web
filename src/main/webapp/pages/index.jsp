@@ -19,33 +19,34 @@
 </head>
 <body>
 <div class="floatright"><input type="submit" class="btn btn-primary" class="btn" value="Existing user? Login"  onclick="location.href='/login'"></div>
-<jsp:include page="header.jsp"></jsp:include>
+<h1>Portfolio Management System</h1>
+<hr>
 <div class="login-form" class="container">
 <form:form method="POST" action="/registration" modelAttribute="user" class="was-validated">
 <!-- <form action="/registration" method="post" class="was-validated" name="register"> -->
 <div><h3>Investor Registration</h3></div>
 <div class="form-group">
-<div><form:input path="panId" name="panId" type="text" title="Permanent Account Number" class="form-control" placeholder="PAN" required="required"/></div>
+<div><form:input path="panId" name="panId" type="text" title="Permanent Account Number" class="form-control" pattern=".{10,}" placeholder="PAN" required="required"/></div>
 <div><form:errors path = "panId" cssClass="error" /></div>
 </div>
 <div class="form-group">
-<div><form:input path = "userName" name="userName" type="text" title="Unique user name for login, having minimum 6 characters length" class="form-control" placeholder="Username" required="required"/></div>
+<div><form:input path = "userName" name="userName" type="text" pattern=".{6,}" title="Unique user name for login, having minimum 6 characters length" class="form-control" placeholder="Username" required="required"/></div>
 <div><form:errors path = "userName" cssClass="error" /></div>
 </div>
 <div class="form-group">
-<div><form:input path = "password" name="password" type="password" title="Password for login, having minimum 6 characters length" class="form-control" placeholder="Password" required="required"/></div>
+<div><form:input path = "password" name="password" type="password" pattern=".{6,}" title="Password for login, having minimum 6 characters length" class="form-control" placeholder="Password" required="required"/></div>
 <div><form:errors path = "password" cssClass="error" /></div>
 </div>
 <div class="form-group">
-<div><form:input path = "confirmPassword" name="confirmPassword" type="password" title="Password for login, having minimum 6 characters length" class="form-control" placeholder="Confirm Password" required="required"/></div>
+<div><form:input path = "confirmPassword" name="confirmPassword" type="password" pattern=".{6,}" title="Password for login, having minimum 6 characters length" class="form-control" placeholder="Confirm Password" required="required"/></div>
 <div><form:errors path = "confirmPassword" cssClass="error" /></div>
 </div>
 <div class="form-group">
-<div><form:input path = "name" name="name" type="text" title="Full Name of the user" class="form-control" placeholder="FirstName LastName" required="required"/></div>
+<div><form:input path = "name" name="name" type="text" title="Full Name of the user" pattern=".{3,}" class="form-control" placeholder="FirstName LastName" required="required"/></div>
 <div><form:errors path = "name" cssClass="error" /></div>
 </div>
 <div class="form-group">
-<div><form:input path = "emailId" name="emailId" type="text" title="Email id of the user" class="form-control" placeholder="Email" required="required"/></div>
+<div><form:input path = "emailId" name="emailId" type="text" title="Email id of the user" pattern=".{6,}" class="form-control" placeholder="Email" required="required"/></div>
 <div><form:errors path = "emailId" cssClass="error" /></div>
 </div>
 <div class="form-group">

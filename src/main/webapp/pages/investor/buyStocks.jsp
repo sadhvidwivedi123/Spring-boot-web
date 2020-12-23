@@ -29,7 +29,7 @@
 <tr><th>Exchange: </th><td><input type="radio" id="BSE" name="Exchange" value="${stock.stockExchange}"><label>BSE</label><input type="radio" id="NSE" name="Exchange" value="${stock.stockExchange}" required="required"><label>NSE</label></td></tr>
 <tr><th>Stock Id: </th><td><label>${stock.stockId }</label></td></tr>
 <tr><th>Current Stock Price:  </th><td><label>${stock.currentPrice}</label></td></tr>
-<tr><th>Quantity:  </th><td><input name="quantity" type="number" placeholder="Enter quantity" required="required"></input></td></tr>
+<tr><th>Quantity:  </th><td><input name="quantity" type="number" min="1" placeholder="Enter quantity" required="required"></input></td></tr>
 
 </table>
 <div id="center"><button class="btn btn-primary" type="submit">Buy</button></div>

@@ -32,6 +32,9 @@ public interface InvestorStockDetailsRepo extends JpaRepository<InvestorStockDet
 	@Modifying(clearAutomatically = true)
 	 @Query("UPDATE InvestorStockDetailsEntity isde SET isde.unit=:quantity, isde.date=:date WHERE isde.investorStockId=:key")
 	void update(@Param("quantity") Integer quantity,@Param("key") Integer key, @Param("date") LocalDate date);
+	
+	boolean existsByInvestor(InvestorEntity investor);
+	InvestorStockDetailsEntity findByStockAndInvestor(StockEntity stock, InvestorEntity investor);
 
 	
 	

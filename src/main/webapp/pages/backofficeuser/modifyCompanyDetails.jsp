@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
-<jsp:include page="/pages/header.jsp"></jsp:include>
+<jsp:include page="/pages/header2.jsp"></jsp:include>
 <h3>Modify Company Details</h3>
 <div class="login-form">
 <form:form action="/backofficeuser/modifyCompanyAction" method="post" modelAttribute="company">

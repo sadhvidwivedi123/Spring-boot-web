@@ -59,6 +59,7 @@ public class HomeController {
 		{
 			homeService.register(user);
 			mv = new ModelAndView("redirect:/login");
+			mv.addObject("registerSuccess", true);
 		}
 		return mv;
 		

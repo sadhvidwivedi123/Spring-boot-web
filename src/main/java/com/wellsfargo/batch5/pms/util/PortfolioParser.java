@@ -3,6 +3,7 @@ package com.wellsfargo.batch5.pms.util;
 import org.springframework.format.datetime.joda.LocalDateParser;
 
 import com.wellsfargo.batch5.pms.entity.BackOfficeUserEntity;
+import com.wellsfargo.batch5.pms.entity.CommisionEntity;
 import com.wellsfargo.batch5.pms.entity.CommodityEntity;
 import com.wellsfargo.batch5.pms.entity.CompanyEntity;
 import com.wellsfargo.batch5.pms.entity.InvestorCommodityDetailsEntity;
@@ -10,8 +11,10 @@ import com.wellsfargo.batch5.pms.entity.InvestorEntity;
 import com.wellsfargo.batch5.pms.entity.InvestorStockDetailsEntity;
 import com.wellsfargo.batch5.pms.entity.PortfolioWalletEntity;
 import com.wellsfargo.batch5.pms.entity.StockEntity;
+import com.wellsfargo.batch5.pms.entity.TransactionEntity;
 import com.wellsfargo.batch5.pms.entity.UserEntity;
 import com.wellsfargo.batch5.pms.model.BackOfficeUserModel;
+import com.wellsfargo.batch5.pms.model.CommisionModel;
 import com.wellsfargo.batch5.pms.model.CommodityModel;
 import com.wellsfargo.batch5.pms.model.CompanyModel;
 import com.wellsfargo.batch5.pms.model.InvestorCommodityDetailsModel;
@@ -20,6 +23,7 @@ import com.wellsfargo.batch5.pms.model.InvestorRegisterModel;
 import com.wellsfargo.batch5.pms.model.InvestorStockDetailsModel;
 import com.wellsfargo.batch5.pms.model.PortfolioWalletModel;
 import com.wellsfargo.batch5.pms.model.StockModel;
+import com.wellsfargo.batch5.pms.model.TransactionModel;
 import com.wellsfargo.batch5.pms.model.UserModel;
 
 public class PortfolioParser {
@@ -219,6 +223,31 @@ public class PortfolioParser {
 		target.setStock(PortfolioParser.parse(source.getStock()));
 		target.setQuantity(source.getUnit());
 		target.setInvestorStockId(source.getInvestorStockId());
+		return target;
+	}
+	public static TransactionModel parse(TransactionEntity source) {
+		// TODO Auto-generated method stub
+		
+		TransactionModel target=new TransactionModel();
+		target.setAmount(source.getAmount());
+		target.setCommodityName(source.getCommodityName());
+		target.setCompanyName(source.getCompanyName());
+		target.setDate(source.getDate());
+		target.setQuantity(source.getQuantity());
+		target.setStockCommodity(source.getStockCommodity());
+		target.setTransactionId(source.getTransactionId());
+		target.setTransactionType(source.getTransactionType());
+		target.setUserId(source.getUserId());
+		return target;
+	}
+	public static CommisionModel parse(CommisionEntity source) {
+		// TODO Auto-generated method stub
+		
+		CommisionModel target=new CommisionModel();
+		target.setCommisionId(source.getCommisionId());
+		target.setCommisionValue(source.getCommisionValue());
+		target.setDate(source.getDate());
+		
 		return target;
 	}
 	

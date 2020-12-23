@@ -19,8 +19,7 @@
   <link rel="stylesheet" href="/css/commonlogin.css">
 </head>
 <body>
-<div class="floatright"><input type="submit" class="btn btn-primary" class="btn" value="Logout"  onclick="location.href='/logout'"></div>
-<jsp:include page="/pages/header.jsp"></jsp:include>
+<jsp:include page="/pages/header2.jsp"></jsp:include>
 <div><h4>Welcome, ${auth.name}</h4></div>
 <div class="container" style="position:absolute;">
 <ul class="nav nav-tabs" role="tablist">
@@ -145,15 +144,34 @@
 <div class="showhide" style="display:none;" id="reports">
 <h3>Get Commission Report:</h3>
 <div id="center">
-<form action="backOfficeUserReportGeneration.jsp" method="get">
-<input type="radio" name="monthly" id="monthly"><label for="monthly">Monthly</label>
-<input type="radio" name="annual" id="annual" ><label for="annual">Annual</label>
-<input type="radio" name="dateRange" id="dateRange"><label for="dateRange">Date Range</label>
-<br><br>
-<label for="dateRange">From: </label><input type="date" name="report" id="from">
-<label for="dateRange">To: </label><input type="date" name="report" id="to">
-<br><br>
-<div id="center"><input type="submit" class="btn btn-primary" class="btn" value="Generate Report"></div>
+<form action="/backofficeuser/generateCommissionReport">
+<ul class="ul-ns" id="center">
+<li><input type="radio" name="report" onclick="document.getElementById('dateShow').style.display='none';document.getElementById('monthShow').style.display='block';" id="monthly" value="monthly" required><label for="monthly">Monthly(Current Year)</label>
+<input type="radio" name="report" onclick="document.getElementById('dateShow').style.display='none';document.getElementById('monthShow').style.display='none';" id="annual" value="annual" required><label for="annual">Annual(Current Year)</label>
+<input type="radio" name="report" onclick="document.getElementById('dateShow').style.display='block';document.getElementById('monthShow').style.display='none';" id="dateRange" value="dateRange" required><label for="dateRange">Date Range</label>
+</li>
+<li><div id="dateShow" style="display:none;"><label for="dateRange">From: </label><input type="date" name="fromDate" id="from">
+<label for="dateRange">To: </label><input type="date" name="toDate" id="to">
+</div>
+<div id="monthShow" style="display:none;">
+<select name="month" >
+  <option value="January">January</option>
+  <option value="February">February</option>
+  <option value="March">March</option>
+  <option value="April">April</option>
+  <option value="May">May</option>
+  <option value="June">June</option>
+  <option value="July">July</option>
+  <option value="August">August</option>
+  <option value="September">September</option>
+  <option value="October">October</option>
+  <option value="November">November</option>
+  <option value="December">December</option>
+  
+</select>
+</div>
+<div id="center"><input type="submit" class="btn btn-primary" class="btn" value="Generate Report"></div></li>
+</ul>
 </form>
 </div>
 </div>

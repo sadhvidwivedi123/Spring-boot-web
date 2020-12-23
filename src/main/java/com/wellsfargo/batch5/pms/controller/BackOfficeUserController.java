@@ -1,5 +1,9 @@
 package com.wellsfargo.batch5.pms.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +24,7 @@ import com.wellsfargo.batch5.pms.model.CommisionModel;
 import com.wellsfargo.batch5.pms.model.CommodityModel;
 import com.wellsfargo.batch5.pms.model.CompanyModel;
 import com.wellsfargo.batch5.pms.model.StockModel;
+import com.wellsfargo.batch5.pms.model.TransactionModel;
 import com.wellsfargo.batch5.pms.model.UserModel;
 import com.wellsfargo.batch5.pms.repo.BackOfficeUserRepo;
 import com.wellsfargo.batch5.pms.repo.CompanyRepo;
@@ -70,6 +75,8 @@ public class BackOfficeUserController {
 			if (!(auth instanceof AnonymousAuthenticationToken) && auth.isAuthenticated()) {
 				mv.addObject("auth",auth);
 				mv.addObject("company_list",backOfficeUserService.getCompanyList());
+				mv.addObject("stock_list",backOfficeUserService.getStockList());
+				mv.addObject("commodity_list",backOfficeUserService.getCommodityList());
 			}
 			
 		}
@@ -249,6 +256,7 @@ public class BackOfficeUserController {
 				mv.addObject("company_list",backOfficeUserService.getCompanyList());
 				mv.addObject("stock_list",backOfficeUserService.getStockList());
 				mv.addObject("commodity_list",backOfficeUserService.getCommodityList());
+				mv.addObject("company_name", company.getCompanyTitle());
 				mv.addObject("isUpdated", true);
 			}
 			
@@ -273,4 +281,18 @@ public class BackOfficeUserController {
 		return mv;
 		
 	}
+	@GetMapping(value = "/generateCommissionReport")
+	public ModelAndView generatePortfolioReport(@RequestParam("report") String report,@RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate,@RequestParam("month") String month) throws PortfolioException {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate fdate=null,tdate=null;		
+		if(fromDate!=null&&fromDate.length()>5)
+		fdate = LocalDate.parse(fromDate, formatter);
+		if(toDate!=null&&fromDate.length()>5)
+		tdate = LocalDate.parse(toDate, formatter);
+		List<CommisionModel> listPortfolioReport=backOfficeUserService.getCommissionReport(report,fdate,tdate,month);
+		ModelAndView mv=new ModelAndView("/backofficeuser/commisionReport");
+		if(listPortfolioReport!=null || listPortfolioReport.size()>0)
+		mv.addObject("report", listPortfolioReport);
+		return mv;
+		}
 }

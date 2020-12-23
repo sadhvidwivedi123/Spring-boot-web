@@ -27,7 +27,7 @@
 <tr hidden="true"><th>Commodity Id: </th><td><input type="text" name="commodityCode" value="${commodity.commodityCode }"/></td></tr>
 <tr><th>Commodity Name: </th><td>${commodity.commodityName }</td></tr>
 <tr><th>Current Price: </th><td>${commodity.currentPrice }</td></tr>
-<tr><th>Quantity: </th><td><input type="number" name="quantity" placeholder="Enter quantity" required="required"></td></tr>
+<tr><th>Quantity: </th><td><input type="number" name="quantity" min="1" placeholder="Enter quantity" required="required"></td></tr>
 </table>
 <br>
 <div id="center" ><button class="btn btn-primary">Buy</button></div>

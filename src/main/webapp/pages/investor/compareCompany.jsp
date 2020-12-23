@@ -15,6 +15,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="js/searchlist.js"></script>
    <link rel="stylesheet" href="/css/commonlogin.css">
+   <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
 <jsp:include page="/pages/header.jsp"></jsp:include>
@@ -37,8 +38,6 @@
 <form action="/investor/compareCompanyAction" method="get">
 <div class="container-fluid p-0">
   <h4>Select companies to compare:</h4> 
-  <input class="form-control" id="myInput" type="text" placeholder="Search.." style="width:30%">
-  <br>
   <table class="table table-striped table-hover table-light customtable">
     <thead>
       <tr><th>Select</th><th>Company Title</th></tr>
