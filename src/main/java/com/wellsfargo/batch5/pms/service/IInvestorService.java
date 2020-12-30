@@ -53,8 +53,7 @@ public interface IInvestorService {
 	public void addMoneytoWallet(String name, Double amount);
 
 	public List<TransactionModel> getPortfolioReport(String userName,String report, LocalDate fromDate, LocalDate toDate, String month)throws PortfolioException;
-	
-	
-	
+		
+	public void updateInvestorHome(String userName, Double earnedAmount, Double investedAmount, Double currentPortfolioValue) throws PortfolioException;
 	
 }
