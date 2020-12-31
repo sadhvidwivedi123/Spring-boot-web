@@ -20,7 +20,10 @@ public class InvestorAmountEarnedEntity {
 	
 	private LocalDate date;
 	
-	
+	public InvestorAmountEarnedEntity()
+	{
+		
+	}
 
 	public InvestorAmountEarnedEntity(Integer userId, Double amountEarned, LocalDate date) {
 		super();

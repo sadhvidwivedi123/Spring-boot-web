@@ -96,7 +96,9 @@
   </div>
   </div>
  <hr>
+
 <h5 style="font-weight:bold;float:left">Recently Viewed Companies:</h5>
+ <span>
 <c:choose>
 <c:when test="${recent_company_list!=null}">
 <div class=" table-wrapper-scroll-y my-custom-scrollbar">
@@ -108,7 +110,8 @@
 </div>
 				</c:when>
 </c:choose>
-  
+ </span>
+ 
    
 </div>
 <div id="companies" class="showhide" style="display:none;">
@@ -334,9 +337,10 @@
 </div>
 <div id="myprofile" class="showhide" style="display:none;">
 <h3>Earnings this week</h3>
-<div id="piechart">
-<img src="" alt="chart">
-</div>
+<br>
+<div id="center">
+ <jsp:include page="/pages/investor/charts.jsp"></jsp:include>
+ </div>
 <hr>
 <a class="link" href="/investor/addMoney" >Add Money to Wallet</a>
 <h3>Get Portfolio Report</h3>
@@ -370,7 +374,6 @@
 </ul>
 </form>
 </div>
-
    <script src="/js/investorhome.js"></script>
 </body>
 </html>

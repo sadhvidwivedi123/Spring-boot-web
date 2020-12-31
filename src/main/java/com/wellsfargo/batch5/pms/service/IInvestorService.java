@@ -53,6 +53,8 @@ public interface IInvestorService {
 	public void addMoneytoWallet(String name, Double amount);
 
 	public List<TransactionModel> getPortfolioReport(String userName,String report, LocalDate fromDate, LocalDate toDate, String month)throws PortfolioException;
+
+	public Double[] getAmountEarnedforlast10Weeks(String name);
 	
 	
 	

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.wellsfargo.batch5.pms.entity.CommisionEntity;
 import com.wellsfargo.batch5.pms.entity.CommodityEntity;
 import com.wellsfargo.batch5.pms.entity.CompanyEntity;
+import com.wellsfargo.batch5.pms.entity.InvestorAmountEarnedEntity;
 import com.wellsfargo.batch5.pms.entity.InvestorCommodityDetailsEntity;
 import com.wellsfargo.batch5.pms.entity.InvestorEntity;
 import com.wellsfargo.batch5.pms.entity.InvestorStockDetailsEntity;
@@ -119,7 +120,8 @@ public class InvestorServiceImpl implements IInvestorService{
 		if(investor.getAmountInvested()==null)
 			amountEarned=0.0;
 		else
-			amountEarned=investor.getCurrentPortfolioValue()-investor.getAmountInvested();
+			amountEarned=investor.getAmountEarned();
+			//amountEarned=investor.getCurrentPortfolioValue()-investor.getAmountInvested();
 		
 		if(amountEarned<0)
 			amountEarned=0.0;
@@ -190,8 +192,16 @@ public class InvestorServiceImpl implements IInvestorService{
 		//update user transaction table
 				TransactionEntity te=new TransactionEntity(null, userRepo.findByUserName(userName).getUserId(), "sell", "commodity", totalPrice,LocalDate.now(),null,commodityName,quantity);
 				transactionRepo.save(te);
+				InvestorEntity investor=investorRepo.findById(userRepo.findByUserName(userName).getUserId()).get();
+				if(investor.getAmountEarned()!=null)
+				investor.setAmountEarned(investor.getAmountEarned()+totalPrice);
+				else
+					investor.setAmountEarned(totalPrice);
+				investorRepo.saveAndFlush(investor);
+				InvestorAmountEarnedEntity investorAmountEarnedEntity=new InvestorAmountEarnedEntity(investor.getUserId(),totalPrice,LocalDate.now());
 				
-		
+				investorAmountEarnedRepo.saveAndFlush(investorAmountEarnedEntity);
+				
 	}
 	@Override
 	public void buyCommodity(String userName,String commodityName, double price, int quantity, double totalPrice) {
@@ -276,6 +286,19 @@ public class InvestorServiceImpl implements IInvestorService{
 		//update user transaction table
 				TransactionEntity te=new TransactionEntity(null, userRepo.findByUserName(userName).getUserId(), "sell", "stock", totalPrice,LocalDate.now(),stockRepo.findById(Integer.parseInt(stockId)).get().getCompany().getCompanyTitle(),null,quantity);
 				transactionRepo.save(te);
+				
+				InvestorEntity investor=investorRepo.findById(userRepo.findByUserName(userName).getUserId()).get();
+				
+				if(investor.getAmountEarned()!=null)
+					investor.setAmountEarned(investor.getAmountEarned()+totalPrice);
+					else
+						investor.setAmountEarned(totalPrice);
+					investorRepo.saveAndFlush(investor);
+					
+					//update amount earned for charts
+					InvestorAmountEarnedEntity investorAmountEarnedEntity=new InvestorAmountEarnedEntity(investor.getUserId(),totalPrice,LocalDate.now());
+					
+					investorAmountEarnedRepo.saveAndFlush(investorAmountEarnedEntity);
 				
 	}
 
@@ -502,20 +525,34 @@ public class InvestorServiceImpl implements IInvestorService{
 		return te1;
 	}
 	
-	public List<InvestorAmountEarnedModel> getAmountEarnedforlast10Weeks(String userName)
+	public Double[] getAmountEarnedforlast10Weeks(String userName)
 	{
-		List<InvestorAmountEarnedModel> list=new ArrayList<InvestorAmountEarnedModel>();
-		InvestorAmountEarnedModel m=new InvestorAmountEarnedModel();
+		//List<InvestorAmountEarnedModel> list=new ArrayList<InvestorAmountEarnedModel>();
+		//InvestorAmountEarnedModel m=new InvestorAmountEarnedModel();
+		Double investorAmountEarned10Weeks[]=new Double[10];
 		LocalDate from=null,to=null;
+		Double sum=0.0;
+		to=LocalDate.now();
 		for(int i=0;i<10;i++)
 		{
-		to=LocalDate.now();
 		from=to.minusDays(7);
-		
-		//m.setAmountEarned(investorAmountEarnedRepo.fin);
-		
+		List<InvestorAmountEarnedEntity> list1=investorAmountEarnedRepo.findByDateBetween(from, to);
+		if(list1==null||list1.size()==0)
+		{
+			investorAmountEarned10Weeks[i]=0.0;
 		}
-		return list;
+		else
+		{
+			sum=0.0;
+			for(InvestorAmountEarnedEntity in:list1)
+				sum=sum+in.getAmountEarned();
+			investorAmountEarned10Weeks[i]=(double) (Math.round(sum/list1.size()*100)/100);
+		}
+			
+		//m.setAmountEarned(investorAmountEarnedRepo.fin);
+		to=to.minusDays(8);
+		}
+		return investorAmountEarned10Weeks;
 	}
 	
 
