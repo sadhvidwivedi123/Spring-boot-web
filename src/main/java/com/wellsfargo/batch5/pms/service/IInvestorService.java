@@ -55,5 +55,8 @@ public interface IInvestorService {
 	public List<TransactionModel> getPortfolioReport(String userName,String report, LocalDate fromDate, LocalDate toDate, String month)throws PortfolioException;
 		
 	public void updateInvestorHome(String userName, Double earnedAmount, Double investedAmount, Double currentPortfolioValue) throws PortfolioException;
+
+	public Double[] getAmountEarnedforlast10Weeks(String name);
+	
 	
 }

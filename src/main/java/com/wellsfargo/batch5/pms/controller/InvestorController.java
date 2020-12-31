@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.wellsfargo.batch5.pms.entity.InvestorEntity;
@@ -55,6 +56,8 @@ public class InvestorController {
 	@GetMapping("/investorhome")
 	public ModelAndView loginAction() throws PortfolioException
 	{
+		RestTemplate rt=new RestTemplate();
+		Object s=rt.getForObject("https://api.exchangeratesapi.io/latest?base=INR", Object.class);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		ModelAndView mv=new ModelAndView("/investor/investorhome");
 		if (!(auth instanceof AnonymousAuthenticationToken) && auth.isAuthenticated()) {
@@ -79,6 +82,7 @@ public class InvestorController {
 			if(currencyService.getToCurrency()!=null)
 			mv.addObject("CurrencyCode", currencyService.getToCurrency());
 			//mv.addObject("inv_stock_list",investorService.getInvestorStockList());
+			mv.addObject("earnTrend",investorService.getAmountEarnedforlast10Weeks(auth.getName()));
 		}
 		
 		return mv;
