@@ -1,7 +1,5 @@
 package com.wellsfargo.batch5.pms.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -9,8 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.datetime.joda.DateTimeParser;
-import org.springframework.format.datetime.joda.LocalDateParser;
+
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,15 +22,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.wellsfargo.batch5.pms.entity.InvestorEntity;
 import com.wellsfargo.batch5.pms.exception.PortfolioException;
 import com.wellsfargo.batch5.pms.model.CommodityModel;
 import com.wellsfargo.batch5.pms.model.CompanyModel;
+import com.wellsfargo.batch5.pms.model.ConversionCurrency;
+import com.wellsfargo.batch5.pms.model.CurrencyModel;
 import com.wellsfargo.batch5.pms.model.InvestorModel;
 import com.wellsfargo.batch5.pms.model.StockModel;
 import com.wellsfargo.batch5.pms.model.TransactionModel;
 import com.wellsfargo.batch5.pms.repo.CompanyRepo;
 import com.wellsfargo.batch5.pms.repo.InvestorCommodityDetailsRepo;
+import com.wellsfargo.batch5.pms.service.CurrencyServiceImpl;
 import com.wellsfargo.batch5.pms.service.IBackOfficeUserService;
+import com.wellsfargo.batch5.pms.service.ICurrencyService;
 import com.wellsfargo.batch5.pms.service.IInvestorService;
 
 
@@ -45,7 +47,11 @@ public class InvestorController {
 	private IInvestorService investorService;
 	
 	@Autowired
+	private ICurrencyService currencyService;
+	
+	@Autowired
 	private IBackOfficeUserService backOfficeUserService;
+
 	
 	@GetMapping("/investorhome")
 	public ModelAndView loginAction() throws PortfolioException
@@ -73,12 +79,15 @@ public class InvestorController {
 			if(investorService.getRecentCompanies(auth.getName())!=null)
 				if(investorService.getRecentCompanies(auth.getName()).size()!=0)
 			mv.addObject("recent_company_list", investorService.getRecentCompanies(auth.getName()));
+			if(currencyService.getToCurrency()!=null)
+			mv.addObject("CurrencyCode", currencyService.getToCurrency());
 			//mv.addObject("inv_stock_list",investorService.getInvestorStockList());
 			mv.addObject("earnTrend",investorService.getAmountEarnedforlast10Weeks(auth.getName()));
 		}
 		
 		return mv;
 	}
+	
 	@PostMapping("/buyStocks")
 	public ModelAndView goToBuyStocks(@RequestParam("stock") String selectedStock) throws PortfolioException
 	{
@@ -411,11 +420,26 @@ public class InvestorController {
 		mv.addObject("report", listPortfolioReport);
 		return mv;
 		}
+	
 	@GetMapping(value = "/charts")
 	public ModelAndView generateCharts() {
 		ModelAndView mv=new ModelAndView("/investor/charts");
 		return mv;
+	}
 		
-		
+	@GetMapping(value = "/redirect")
+	public String redirectHome(@RequestParam("currency") String currency) throws PortfolioException {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken) && auth.isAuthenticated()) {
+			Double investedAmountResult = this.currencyService.convert(
+					new ConversionCurrency(currency, "INR", investorService.getAmountInvested(auth.getName())));
+			Double earnedAmountResult = this.currencyService
+					.convert(new ConversionCurrency(currency, "INR", investorService.getAmountEarned(auth.getName())));
+			Double currentPortfolioAmountResult = this.currencyService.convert(
+					new ConversionCurrency(currency, "INR", investorService.getCurrentPortfolioValue(auth.getName())));
+			investorService.updateInvestorHome(auth.getName(), earnedAmountResult, investedAmountResult,
+					currentPortfolioAmountResult);
+		}
+		return "redirect:investorhome";
 	}
 }

@@ -24,6 +24,7 @@ import com.wellsfargo.batch5.pms.entity.UserEntity;
 import com.wellsfargo.batch5.pms.exception.PortfolioException;
 import com.wellsfargo.batch5.pms.model.CommisionModel;
 import com.wellsfargo.batch5.pms.model.CompanyModel;
+import com.wellsfargo.batch5.pms.model.ConversionCurrency;
 import com.wellsfargo.batch5.pms.model.InvestorAmountEarnedModel;
 import com.wellsfargo.batch5.pms.model.InvestorCommodityDetailsModel;
 import com.wellsfargo.batch5.pms.model.InvestorStockDetailsModel;
@@ -39,7 +40,6 @@ import com.wellsfargo.batch5.pms.repo.StockRepo;
 import com.wellsfargo.batch5.pms.repo.TransactionRepo;
 import com.wellsfargo.batch5.pms.repo.UserRepo;
 import com.wellsfargo.batch5.pms.util.PortfolioParser;
-
 @Service
 public class InvestorServiceImpl implements IInvestorService{
 
@@ -553,6 +553,15 @@ public class InvestorServiceImpl implements IInvestorService{
 		to=to.minusDays(8);
 		}
 		return investorAmountEarned10Weeks;
+	}
+
+	@Override
+	public void updateInvestorHome(String userName, Double amountEarned, Double investedAmount, Double currentPortfolioValue) throws PortfolioException {	
+		InvestorEntity investor=investorRepo.findById(userRepo.findByUserName(userName).getUserId()).get();
+			investor.setAmountEarned(amountEarned);
+			investor.setAmountInvested(investedAmount);
+			investor.setCurrentPortfolioValue(currentPortfolioValue);
+			investorRepo.updateInvestorHome(amountEarned, investedAmount, currentPortfolioValue, investor.getPanId());	
 	}
 	
 
